@@ -1,0 +1,228 @@
+ .card-body {
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     height: 100%;
+ }
+
+ .dark-mode-btn {
+     border: 2px solid #57b230;
+ }
+
+ .card-body ul {
+     margin-bottom: auto;
+ }
+
+ .card-body a:hover {
+     text-decoration: underline;
+ }
+
+ .card-deck {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+ }
+
+ .card {
+     width: 300px;
+     /* Ajusta el ancho deseado de tus cartas */
+     border: 1px solid #57b230;
+     border-radius: 8px;
+     padding: 16px;
+     text-align: center;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     background-color: #ffffff;
+     color: #333;
+     /* Color de texto oscuro para el modo claro */
+
+ }
+
+ .card h2 {
+     color: #555;
+     /* Color de texto oscuro para los elementos h2 en el modo claro */
+ }
+
+ .card-header {
+     background-color: #ffffff;
+     /* Color de fondo para la cabecera de la tarjeta en el modo claro */
+ }
+
+ /* Estilos para el modo oscuro */
+ .dark-mode .card {
+     background-color: #222;
+     color: #fff;
+     /* Color de texto claro para el modo oscuro */
+ }
+
+ .dark-mode .card-header {
+     background-color: #222;
+     /* Color de fondo para la cabecera de la tarjeta en el modo oscuro */
+ }
+
+ .dark-mode .card h2 {
+     color: #ccc;
+     /* Color de texto claro para los elementos h2 en el modo oscuro */
+ }
+
+ /* Estilos para las imÃ¡genes dentro de las cartas */
+ .card img {
+     max-width: 100%;
+     /* La imagen no superarÃ¡ el ancho de la tarjeta */
+     height: auto;
+     /* La altura se ajustarÃ¡ proporcionalmente al ancho */
+     display: block;
+     margin: 0 auto;
+     border-radius: 8px;
+     /* Opcional: para aÃ±adir bordes redondeados a las imÃ¡genes */
+ }
+
+ /* Centrar imÃ¡genes en formato mÃ³vil */
+ @media (max-width: 767px) {
+     .card img {
+         display: block;
+         margin: 0 auto;
+     }
+ }
+
+ h1 {
+     text-align: center;
+     margin-bottom: 20px;
+ }
+
+ .faq-item {
+     border: 1px solid #ccc;
+     border-radius: 5px;
+     margin-bottom: 20px;
+     padding: 10px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     background-color: #f9f9f9;
+     /* Color de fondo en modo claro */
+     color: #333;
+     /* Color de texto en modo claro */
+ }
+
+ .faq-question {
+     cursor: pointer;
+     font-size: 18px;
+     font-weight: bold;
+ }
+
+ .faq-answer {
+     display: none;
+     font-size: 16px;
+     margin-top: 10px;
+     padding: 10px;
+     background-color: #f9f9f9;
+     /* Color de fondo en modo claro */
+     color: #333;
+     /* Color de texto en modo claro */
+ }
+
+ /* Estilos para el modo oscuro */
+ .faq-item.dark-mode {
+     background-color: #333;
+     /* Color de fondo en modo oscuro */
+     color: #fff;
+     /* Color de texto en modo oscuro */
+ }
+
+ .faq-item.dark-mode .faq-question {
+     color: #fff;
+     /* Color de texto en modo oscuro */
+ }
+
+ .faq-item.dark-mode .faq-answer {
+     background-color: #333;
+     /* Color de fondo en modo oscuro */
+     color: #fff;
+     /* Color de texto en modo oscuro */
+ }
+
+ body {
+     background-color: #ffffff;
+     color: #000000;
+ }
+
+ /* Estilos para el modo oscuro */
+ body.dark-mode {
+     background-color: #333333;
+     color: #ffffff;
+ }
+
+ /* Estilos para las tarjetas */
+ .card button {
+     display: block;
+     margin: 20px auto 0;
+     padding: 10px 20px;
+     background-color: #57b230;
+     color: #000000;
+     border: 2px solid #57b230;
+     border-radius: 4px;
+     cursor: pointer;
+ }
+
+ /* Opcional: Estilos adicionales para resaltar el botÃ³n al pasar el cursor sobre Ã©l */
+ .card button:hover {
+     background-color: #ffffff;
+     color: #57b230;
+ }
+
+ /* Estilos para el texto dentro de las tarjetas */
+ .card-body {
+     padding: 1.25rem;
+ }
+
+ /* Estilos para el botÃ³n de modo oscuro */
+ .btn-toggle {
+     background-color: transparent;
+     border: none;
+     cursor: pointer;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     color: #000000;
+     /* Cambiar el color del icono del botÃ³n */
+     margin-left: auto;
+     font-size: 1.5rem;
+     width: 30px;
+     height: 30px;
+ }
+
+ .btn-mode {
+     border: 2px solid #57b230;
+     /* Borde del botÃ³n */
+     border-radius: 5px;
+     /* Bordes redondeados del botÃ³n */
+     color: #57b230;
+     /* Color del texto */
+     background-color: transparent;
+     /* Fondo transparente */
+     padding: 10px 20px;
+     /* Espaciado interno del botÃ³n */
+     font-size: 16px;
+     /* TamaÃ±o de fuente del texto */
+     cursor: pointer;
+     /* Cambiar el cursor al pasar por encima */
+ }
+
+ .btn-mode:hover {
+     background-color: #57b230;
+     /* Color de fondo al pasar por encima */
+     color: #fff;
+     /* Color del texto al pasar por encima */
+ }
+
+ /* Estilos para los iconos de modo oscuro */
+ #moon-icon {
+     display: inline-block;
+ }
+
+ #sun-icon {
+     display: none;
+ }
+
+ @media screen and (min-width:0px) and (max-width:767px) {
+     .iframe-container iframe {
+         height: 266px
+     }
+ }
