@@ -1,0 +1,1768 @@
+
+
+
+<html lang="es">
+<title>EMBED PLAYER</title>
+<script defer data-domain="streamdz3.lat" src="https://plausible.io/js/script.file-downloads.hash.outbound-links.pageview-props.revenue.tagged-events.js"></script>
+<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/console-ban@4.1.0/dist/console-ban.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/console-ban@4.1.0/dist/console-ban.min.js"></script>
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex">
+    <meta content='width=device-width, initial-scale=1' name='viewport'>
+    <script src='//cdn.jsdelivr.net/npm/@clappr/player@0.8/dist/clappr.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/level-selector@latest/dist/level-selector.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clappr-chromecast-plugin@latest/dist/clappr-chromecast-plugin.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/@swarmcloud/hls/p2p-engine.min.js"></script>
+
+<style>
+body,html{margin:0;padding:0;width:100%;height:100%;overflow:hidden}#player{position:absolute;top:0;left:0;width:100%;height:100%}.media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-background[data-seekbar]{height:4px!important;background-color:rgba(0, 148, 255)!important}.media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar]:hover .bar-background[data-seekbar]{height:5px!important}.media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-background[data-seekbar] .bar-fill-1[data-seekbar]{background-color:rgba(0, 148, 255)!important}
+
+        .activate-sound {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: transparent;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            opacity: 0.8;
+            z-index: 999;
+        }
+
+        .activate-sound:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .fullscreen-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 16px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+        .fullscreen-button:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+</style>
+
+</head>
+
+<body style="padding: 0px; margin:0px; position: relative;">
+<div id="player-container">
+        <button class="activate-sound" onclick="activarSonido()">Activate sound</button>
+        <div id="player"></div>
+    </div>
+    </body>
+
+<script>
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    var getURL = getParameterByName('get');
+    var getIMG = getParameterByName('img');
+    var getLang = getParameterByName('lang');
+
+    if (getURL == "#") {
+        alert('Vuelve a la página anterior');
+    }
+    if (getIMG == "#") {
+        alert('Vuelve a la página anterior');
+    }
+
+
+    var channels = {
+        
+"intro": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1YTIxZWZmZDY0YjQ2LTYzMDktZWEwNC03ZmQzLWE2NmNmNDIy/master.m3u8",        
+        
+"espn": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1YTIxZWZmZDY0YjQ2LTYzMDktZWEwNC03ZmQzLWE2NmNmNDIy/master.m3u8",
+"espn_1": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1YTIxZWZmZDY0YjQ2LTYzMDktZWEwNC03ZmQzLWE2NmNmNDIy/master.m3u8",
+"espn_2": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1YTIxZWZmZDY0YjQ2LTYzMDktZWEwNC03ZmQzLWE2NmNmNDIy/master.m3u8",
+"espn_3": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1YTIxZWZmZDY0YjQ2LTYzMDktZWEwNC03ZmQzLWE2NmNmNDIy/master.m3u8",
+
+"espn1": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1YTIxZWZmZDY0YjQ2LTYzMDktZWEwNC03ZmQzLWE2NmNmNDIy/master.m3u8",
+"espn1_1": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1YTIxZWZmZDY0YjQ2LTYzMDktZWEwNC03ZmQzLWE2NmNmNDIy/master.m3u8",
+"espn1_2": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1YTIxZWZmZDY0YjQ2LTYzMDktZWEwNC03ZmQzLWE2NmNmNDIy/master.m3u8",
+"espn1_3": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1YTIxZWZmZDY0YjQ2LTYzMDktZWEwNC03ZmQzLWE2NmNmNDIy/master.m3u8",
+
+"espn2": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1ZWU4ZGQ3YWYyNThjLWY2ODgtZTE1NC0zYjJlLWJhZTA4ODI2/master.m3u8",
+"espn2_1": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1ZWU4ZGQ3YWYyNThjLWY2ODgtZTE1NC0zYjJlLWJhZTA4ODI2/master.m3u8",
+"espn2_2": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1ZWU4ZGQ3YWYyNThjLWY2ODgtZTE1NC0zYjJlLWJhZTA4ODI2/master.m3u8",
+"espn2_3": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1ZWU4ZGQ3YWYyNThjLWY2ODgtZTE1NC0zYjJlLWJhZTA4ODI2/master.m3u8",
+
+"espn3": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NmNkZTI3N2M4MTgyLTQwYjktN2VjNC02MTE0LTBhNzY2NWE2/master.m3u8",
+"espn3_1": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NmNkZTI3N2M4MTgyLTQwYjktN2VjNC02MTE0LTBhNzY2NWE2/master.m3u8",
+"espn3_2": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NmNkZTI3N2M4MTgyLTQwYjktN2VjNC02MTE0LTBhNzY2NWE2/master.m3u8",
+"espn3_3": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NmNkZTI3N2M4MTgyLTQwYjktN2VjNC02MTE0LTBhNzY2NWE2/master.m3u8",
+
+"espn4": "https://ja.periquitopan.store/espn4/tracks-v1a1/mono.m3u8",
+"espn4_1": "https://ja.periquitopan.store/espn4/tracks-v1a1/mono.m3u8",
+"espn4_2": "https://ja.periquitopan.store/espn4/tracks-v1a1/mono.m3u8",
+"espn4_3": "https://ja.periquitopan.store/espn4/tracks-v1a1/mono.m3u8",
+
+"espn5": "https://ja.periquitopan.store/espn5/tracks-v1a1/mono.m3u8",
+"espn5_1": "https://ja.periquitopan.store/espn5/tracks-v1a1/mono.m3u8",
+"espn5_2": "https://ja.periquitopan.store/espn5/tracks-v1a1/mono.m3u8",
+"espn5_3": "https://ja.periquitopan.store/espn5/tracks-v1a1/mono.m3u8",
+
+"espn6": "https://ja.periquitopan.store/espn6/tracks-v1a1/mono.m3u8",
+"espn6_1": "https://ja.periquitopan.store/espn6/tracks-v1a1/mono.m3u8",
+"espn6_2": "https://ja.periquitopan.store/espn6/tracks-v1a1/mono.m3u8",
+"espn6_3": "https://ja.periquitopan.store/espn6/tracks-v1a1/mono.m3u8",
+
+"espn7": "https://ja.periquitopan.store/espn7/tracks-v1a1/mono.m3u8",
+"espn7_1": "https://ja.periquitopan.store/espn7/tracks-v1a1/mono.m3u8",
+"espn7_2": "https://ja.periquitopan.store/espn7/tracks-v1a1/mono.m3u8",
+"espn7_3": "https://ja.periquitopan.store/espn7/tracks-v1a1/mono.m3u8",
+
+"espnar": "https://ja.periquitopan.store/espnar/tracks-v1a1/mono.m3u8",
+"espnar_1": "https://ja.periquitopan.store/espnar/tracks-v1a1/mono.m3u8",
+"espnar_2": "https://ja.periquitopan.store/espnar/tracks-v1a1/mono.m3u8",
+"espnar_3": "https://ja.periquitopan.store/espnar/tracks-v1a1/mono.m3u8",
+
+"espn2ar": "https://ja.periquitopan.store/espn2ar/tracks-v1a1/mono.m3u8",
+"espn2ar_1": "https://ja.periquitopan.store/espn2ar/tracks-v1a1/mono.m3u8",
+"espn2ar_2": "https://ja.periquitopan.store/espn2ar/tracks-v1a1/mono.m3u8",
+"espn2ar_3": "https://ja.periquitopan.store/espn2ar/tracks-v1a1/mono.m3u8",
+
+"espn3ar": "https://ja.periquitopan.store/espn3ar/tracks-v1a1/mono.m3u8",
+"espn3ar_1": "https://ja.periquitopan.store/espn3ar/tracks-v1a1/mono.m3u8",
+"espn3ar_2": "https://ja.periquitopan.store/espn3ar/tracks-v1a1/mono.m3u8",
+"espn3ar_3": "https://ja.periquitopan.store/espn3ar/tracks-v1a1/mono.m3u8",
+
+"espn4ar": "https://ja.periquitopan.store/espn4ar/tracks-v1a1/mono.m3u8",
+"espn4ar_1": "https://ja.periquitopan.store/espn4ar/tracks-v1a1/mono.m3u8",
+"espn4ar_2": "https://ja.periquitopan.store/espn4ar/tracks-v1a1/mono.m3u8",
+"espn4ar_3": "https://ja.periquitopan.store/espn4ar/tracks-v1a1/mono.m3u8",
+
+"espnnl": "https://ja.periquitopan.store/espnnl/tracks-v1a1/mono.m3u8",
+"espnnl_1": "https://ja.periquitopan.store/espnnl/tracks-v1a1/mono.m3u8",
+"espnnl_2": "https://ja.periquitopan.store/espnnl/tracks-v1a1/mono.m3u8",
+"espnnl_3": "https://ja.periquitopan.store/espnnl/tracks-v1a1/mono.m3u8",
+
+"espn2nl": "https://ja.periquitopan.store/espn2nl/tracks-v1a1/mono.m3u8",
+"espn2nl_1": "https://ja.periquitopan.store/espn2nl/tracks-v1a1/mono.m3u8",
+"espn2nl_2": "https://ja.periquitopan.store/espn2nl/tracks-v1a1/mono.m3u8",
+"espn2nl_3": "https://ja.periquitopan.store/espn2nl/tracks-v1a1/mono.m3u8",
+
+"espn3nl": "https://ja.periquitopan.store/espn3nl/tracks-v1a1/mono.m3u8",
+
+"espnbr": "https://ja.periquitopan.store/espnbr/tracks-v1a1/mono.m3u8",
+"espnbr_1": "https://ja.periquitopan.store/espnbr/tracks-v1a1/mono.m3u8",
+"espnbr_2": "https://ja.periquitopan.store/espnbr/tracks-v1a1/mono.m3u8",
+"espnbr_3": "https://ja.periquitopan.store/espnbr/tracks-v1a1/mono.m3u8",
+
+"espnbr2": "https://ja.periquitopan.store/espnbr2/tracks-v1a1/mono.m3u8",
+"espnbr2_1": "https://ja.periquitopan.store/espnbr2/tracks-v1a1/mono.m3u8",
+"espnbr2_2": "https://ja.periquitopan.store/espnbr2/tracks-v1a1/mono.m3u8",
+"espnbr2_3": "https://ja.periquitopan.store/espnbr2/tracks-v1a1/mono.m3u8",
+
+"espnbr3": "https://ja.periquitopan.store/espnbr3/tracks-v1a1/mono.m3u8",
+
+"espnbr4": "https://ja.periquitopan.store/espnbr4/tracks-v1a1/mono.m3u8",
+
+"eventos1": "https://ja.periquitopan.store/eventos1/tracks-v1a1/mono.m3u8",
+"eventos1_1": "https://ja.periquitopan.store/eventos1/tracks-v1a1/mono.m3u8",
+"eventos1_2": "https://ja.periquitopan.store/eventos1/tracks-v1a1/mono.m3u8",
+"eventos1_3": "https://ja.periquitopan.store/eventos1/tracks-v1a1/mono.m3u8",
+
+"eventos2": "https://ja.periquitopan.store/eventos2/tracks-v1a1/mono.m3u8",
+"eventos2_1": "https://ja.periquitopan.store/eventos2/tracks-v1a1/mono.m3u8",
+"eventos2_2": "https://ja.periquitopan.store/eventos2/tracks-v1a1/mono.m3u8",
+"eventos2_3": "https://ja.periquitopan.store/eventos2/tracks-v1a1/mono.m3u8",
+
+"eventos3": "https://ja.periquitopan.store/eventos3/tracks-v1a1/mono.m3u8",
+"eventos3_1": "https://ja.periquitopan.store/eventos3/tracks-v1a1/mono.m3u8",
+"eventos3_2": "https://ja.periquitopan.store/eventos3/tracks-v1a1/mono.m3u8",
+"eventos3_3": "https://ja.periquitopan.store/eventos3/tracks-v1a1/mono.m3u8",
+
+"eventos4": "https://ja.periquitopan.store/eventos4/tracks-v1a1/mono.m3u8",
+"eventos4_1": "https://ja.periquitopan.store/eventos4/tracks-v1a1/mono.m3u8",
+"eventos4_2": "https://ja.periquitopan.store/eventos4/tracks-v1a1/mono.m3u8",
+"eventos4_3": "https://ja.periquitopan.store/eventos4/tracks-v1a1/mono.m3u8",
+
+"eventos5": "https://ja.periquitopan.store/eventos5/tracks-v1a1/mono.m3u8",
+"eventos5_1": "https://ja.periquitopan.store/eventos5/tracks-v1a1/mono.m3u8",
+"eventos5_2": "https://ja.periquitopan.store/eventos5/tracks-v1a1/mono.m3u8",
+"eventos5_3": "https://ja.periquitopan.store/eventos5/tracks-v1a1/mono.m3u8",
+
+"eventos6": "https://ja.periquitopan.store/eventos6/tracks-v1a1/mono.m3u8",
+"eventos6_1": "https://ja.periquitopan.store/eventos6/tracks-v1a1/mono.m3u8",
+"eventos6_2": "https://ja.periquitopan.store/eventos6/tracks-v1a1/mono.m3u8",
+"eventos6_3": "https://ja.periquitopan.store/eventos6/tracks-v1a1/mono.m3u8",
+
+"eventos7": "https://ja.periquitopan.store/eventos7/tracks-v1a1/mono.m3u8",
+"eventos7_1": "https://ja.periquitopan.store/eventos7/tracks-v1a1/mono.m3u8",
+"eventos7_2": "https://ja.periquitopan.store/eventos7/tracks-v1a1/mono.m3u8",
+"eventos7_3": "https://ja.periquitopan.store/eventos7/tracks-v1a1/mono.m3u8",
+
+"eventos8": "https://ja.periquitopan.store/eventos8/tracks-v1a1/mono.m3u8",
+"eventos8_1": "https://ja.periquitopan.store/eventos8/tracks-v1a1/mono.m3u8",
+"eventos8_2": "https://ja.periquitopan.store/eventos8/tracks-v1a1/mono.m3u8",
+"eventos8_3": "https://ja.periquitopan.store/eventos8/tracks-v1a1/mono.m3u8",
+
+"eventos9": "https://ja.periquitopan.store/eventos9/tracks-v1a1/mono.m3u8",
+"eventos9_1": "https://ja.periquitopan.store/eventos9/tracks-v1a1/mono.m3u8",
+"eventos9_2": "https://ja.periquitopan.store/eventos9/tracks-v1a1/mono.m3u8",
+"eventos9_3": "https://ja.periquitopan.store/eventos9/tracks-v1a1/mono.m3u8",
+
+"eventos10": "https://ja.periquitopan.store/eventos10/tracks-v1a1/mono.m3u8",
+"eventos10_1": "https://ja.periquitopan.store/eventos10/tracks-v1a1/mono.m3u8",
+"eventos10_2": "https://ja.periquitopan.store/eventos10/tracks-v1a1/mono.m3u8",
+"eventos10_3": "https://ja.periquitopan.store/eventos10/tracks-v1a1/mono.m3u8",
+
+"beinsportsextran": "https://ja.periquitopan.store/beinsportsextran/tracks-v1a1/mono.m3u8",
+"beinsportsextran_1": "https://ja.periquitopan.store/beinsportsextran/tracks-v1a1/mono.m3u8",
+"beinsportsextran_2": "https://ja.periquitopan.store/beinsportsextran/tracks-v1a1/mono.m3u8",
+"beinsportsextran_3": "https://ja.periquitopan.store/beinsportsextran/tracks-v1a1/mono.m3u8",
+
+"beinsportsn": "https://ja.periquitopan.store/beinsportsn/tracks-v1a1/mono.m3u8",
+"beinsportsn_1": "https://ja.periquitopan.store/beinsportsn/tracks-v1a1/mono.m3u8",
+"beinsportsn_2": "https://ja.periquitopan.store/beinsportsn/tracks-v1a1/mono.m3u8",
+"beinsportsn_3": "https://ja.periquitopan.store/beinsportsn/tracks-v1a1/mono.m3u8",
+
+"foxar": "https://ja.periquitopan.store/foxar/tracks-v1a1/mono.m3u8",
+"foxar_1": "https://ja.periquitopan.store/foxar/tracks-v1a1/mono.m3u8",
+"foxar_2": "https://ja.periquitopan.store/foxar/tracks-v1a1/mono.m3u8",
+"foxar_3": "https://ja.periquitopan.store/foxar/tracks-v1a1/mono.m3u8",
+
+"fox2ar": "https://ja.periquitopan.store/fox2ar/tracks-v1a1/mono.m3u8",
+"fox2ar_1": "https://ja.periquitopan.store/fox2ar/tracks-v1a1/mono.m3u8",
+"fox2ar_2": "https://ja.periquitopan.store/fox2ar/tracks-v1a1/mono.m3u8",
+"fox2ar_3": "https://ja.periquitopan.store/fox2ar/tracks-v1a1/mono.m3u8",
+
+"fox3ar": "https://ja.periquitopan.store/fox3ar/tracks-v1a1/mono.m3u8",
+"fox3ar_1": "https://ja.periquitopan.store/fox3ar/tracks-v1a1/mono.m3u8",
+"fox3ar_2": "https://ja.periquitopan.store/fox3ar/tracks-v1a1/mono.m3u8",
+"fox3ar_3": "https://ja.periquitopan.store/fox3ar/tracks-v1a1/mono.m3u8",
+
+"espnpremium": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1Y2Q1NjhhZjJkZTNjLWI4MGEtZTQ1NC0zMzU5LWVkZTJjMmYy/master.m3u8",
+"espnpremium_1": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1Y2Q1NjhhZjJkZTNjLWI4MGEtZTQ1NC0zMzU5LWVkZTJjMmYy/master.m3u8",
+"espnpremium_2": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1Y2Q1NjhhZjJkZTNjLWI4MGEtZTQ1NC0zMzU5LWVkZTJjMmYy/master.m3u8",
+"espnpremium_3": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1Y2Q1NjhhZjJkZTNjLWI4MGEtZTQ1NC0zMzU5LWVkZTJjMmYy/master.m3u8",
+
+"tyc": "https://ja.periquitopan.store/tyc/tracks-v1a1/mono.m3u8",
+"tyc_1": "https://ja.periquitopan.store/tyc/tracks-v1a1/mono.m3u8",
+"tyc_2": "https://ja.periquitopan.store/tyc/tracks-v1a1/mono.m3u8",
+"tyc_3": "https://ja.periquitopan.store/tyc/tracks-v1a1/mono.m3u8",
+
+"tycinter": "https://ja.periquitopan.store/tycinter/tracks-v1a1/mono.m3u8",
+
+"futv": "https://ja.periquitopan.store/futv/tracks-v1a1/mono.m3u8",
+"futv_1": "https://ja.periquitopan.store/futv/tracks-v1a1/mono.m3u8",
+"futv_2": "https://ja.periquitopan.store/futv/tracks-v1a1/mono.m3u8",
+"futv_3": "https://ja.periquitopan.store/futv/tracks-v1a1/mono.m3u8",
+
+"tvcdeportes": "https://ja.periquitopan.store/tvcdeportes/tracks-v1a1/mono.m3u8",
+"tvcdeportes_1": "https://ja.periquitopan.store/tvcdeportes/tracks-v1a1/mono.m3u8",
+"tvcdeportes_2": "https://ja.periquitopan.store/tvcdeportes/tracks-v1a1/mono.m3u8",
+"tvcdeportes_3": "https://ja.periquitopan.store/tvcdeportes/tracks-v1a1/mono.m3u8",
+
+"foxmx": "https://ja.periquitopan.store/foxmx/tracks-v1a1/mono.m3u8",
+"foxmx_1": "https://ja.periquitopan.store/foxmx/tracks-v1a1/mono.m3u8",
+"foxmx_2": "https://ja.periquitopan.store/foxmx/tracks-v1a1/mono.m3u8",
+"foxmx_3": "https://ja.periquitopan.store/foxmx/tracks-v1a1/mono.m3u8",
+
+"foxmx2": "https://ja.periquitopan.store/foxmx2/tracks-v1a1/mono.m3u8",
+"foxmx2_1": "https://ja.periquitopan.store/foxmx2/tracks-v1a1/mono.m3u8",
+"foxmx2_2": "https://ja.periquitopan.store/foxmx2/tracks-v1a1/mono.m3u8",
+"foxmx2_3": "https://ja.periquitopan.store/foxmx2/tracks-v1a1/mono.m3u8",
+
+"foxmx3": "https://ja.periquitopan.store/foxmx3/tracks-v1a1/mono.m3u8",
+"foxmx3_1": "https://ja.periquitopan.store/foxmx3/tracks-v1a1/mono.m3u8",
+"foxmx3_2": "https://ja.periquitopan.store/foxmx3/tracks-v1a1/mono.m3u8",
+"foxmx3_3": "https://ja.periquitopan.store/foxmx3/tracks-v1a1/mono.m3u8",
+
+"ziggo": "https://ja.periquitopan.store/ziggo/tracks-v1a1/mono.m3u8",
+"ziggo_1": "https://ja.periquitopan.store/ziggo/tracks-v1a1/mono.m3u8",
+"ziggo_2": "https://ja.periquitopan.store/ziggo/tracks-v1a1/mono.m3u8",
+"ziggo_3": "https://ja.periquitopan.store/ziggo/tracks-v1a1/mono.m3u8",
+
+"go3": "https://ja.periquitopan.store/go3/tracks-v1a1/mono.m3u8",
+"go3_1": "https://ja.periquitopan.store/go3/tracks-v1a1/mono.m3u8",
+"go3_2": "https://ja.periquitopan.store/go3/tracks-v1a1/mono.m3u8",
+"go3_3": "https://ja.periquitopan.store/go3/tracks-v1a1/mono.m3u8",
+
+"deportestvc": "https://ja.periquitopan.store/deportestvc/tracks-v1a1/mono.m3u8",
+"deportestvc_1": "https://ja.periquitopan.store/deportestvc/tracks-v1a1/mono.m3u8",
+"deportestvc_2": "https://ja.periquitopan.store/deportestvc/tracks-v1a1/mono.m3u8",
+"deportestvc_3": "https://ja.periquitopan.store/deportestvc/tracks-v1a1/mono.m3u8",
+
+"deportestvc2": "https://ja.periquitopan.store/deportestvc2/tracks-v1a1/mono.m3u8",
+"deportestvc2_1": "https://ja.periquitopan.store/deportestvc2/tracks-v1a1/mono.m3u8",
+"deportestvc2_2": "https://ja.periquitopan.store/deportestvc2/tracks-v1a1/mono.m3u8",
+"deportestvc2_3": "https://ja.periquitopan.store/deportestvc2/tracks-v1a1/mono.m3u8",
+
+"deportestvc3": "https://ja.periquitopan.store/deportestvc3/tracks-v1a1/mono.m3u8",
+"deportestvc3_1": "https://ja.periquitopan.store/deportestvc3/tracks-v1a1/mono.m3u8",
+"deportestvc3_2": "https://ja.periquitopan.store/deportestvc3/tracks-v1a1/mono.m3u8",
+"deportestvc3_3": "https://ja.periquitopan.store/deportestvc3/tracks-v1a1/mono.m3u8",
+
+"deportestvc4": "https://ja.periquitopan.store/deportestvc4/tracks-v1a1/mono.m3u8",
+"deportestvc4_1": "https://ja.periquitopan.store/deportestvc4/tracks-v1a1/mono.m3u8",
+"deportestvc4_2": "https://ja.periquitopan.store/deportestvc4/tracks-v1a1/mono.m3u8",
+"deportestvc4_3": "https://ja.periquitopan.store/deportestvc4/tracks-v1a1/mono.m3u8",
+
+"foxdeportes": "https://ja.periquitopan.store/foxdeportes/tracks-v1a1/mono.m3u8",
+"foxdeportes_1": "https://ja.periquitopan.store/foxdeportes/tracks-v1a1/mono.m3u8",
+"foxdeportes_2": "https://ja.periquitopan.store/foxdeportes/tracks-v1a1/mono.m3u8",
+"foxdeportes_3": "https://ja.periquitopan.store/foxdeportes/tracks-v1a1/mono.m3u8",
+
+"daznev1": "https://ja.periquitopan.store/daznev1/tracks-v1a1/mono.m3u8",
+
+"daznf1": "https://ja.periquitopan.store/daznf1/tracks-v1a1/mono.m3u8",
+"daznf1_1": "https://ja.periquitopan.store/daznf1/tracks-v1a1/mono.m3u8",
+"daznf1_2": "https://ja.periquitopan.store/daznf1/tracks-v1a1/mono.m3u8",
+"daznf1_3": "https://ja.periquitopan.store/daznf1/tracks-v1a1/mono.m3u8",
+
+"dazn1de": "https://ja.periquitopan.store/dazn1de/tracks-v1a1/mono.m3u8",
+"dazn1de_1": "https://ja.periquitopan.store/dazn1de/tracks-v1a1/mono.m3u8",
+"dazn1de_2": "https://ja.periquitopan.store/dazn1de/tracks-v1a1/mono.m3u8",
+"dazn1de_3": "https://ja.periquitopan.store/dazn1de/tracks-v1a1/mono.m3u8",
+
+"dazn2de": "https://ja.periquitopan.store/dazn2de/tracks-v1a1/mono.m3u8",
+"dazn2de_1": "https://ja.periquitopan.store/dazn2de/tracks-v1a1/mono.m3u8",
+"dazn2de_2": "https://ja.periquitopan.store/dazn2de/tracks-v1a1/mono.m3u8",
+"dazn2de_3": "https://ja.periquitopan.store/dazn2de/tracks-v1a1/mono.m3u8",
+
+"dazn1pt": "https://ja.periquitopan.store/dazn1pt/tracks-v1a1/mono.m3u8",
+"dazn1pt_1": "https://ja.periquitopan.store/dazn1pt/tracks-v1a1/mono.m3u8",
+"dazn1pt_2": "https://ja.periquitopan.store/dazn1pt/tracks-v1a1/mono.m3u8",
+"dazn1pt_3": "https://ja.periquitopan.store/dazn1pt/tracks-v1a1/mono.m3u8",
+
+"dazn2pt": "https://ja.periquitopan.store/dazn2pt/tracks-v1a1/mono.m3u8",
+"dazn2pt_1": "https://ja.periquitopan.store/dazn2pt/tracks-v1a1/mono.m3u8",
+"dazn2pt_2": "https://ja.periquitopan.store/dazn2pt/tracks-v1a1/mono.m3u8",
+"dazn2pt_3": "https://ja.periquitopan.store/dazn2pt/tracks-v1a1/mono.m3u8",
+
+"dazn3pt": "https://ja.periquitopan.store/dazn3pt/tracks-v1a1/mono.m3u8",
+
+"dazn4pt": "https://ja.periquitopan.store/dazn4pt/tracks-v1a1/mono.m3u8",
+
+"dazn5pt": "https://ja.periquitopan.store/dazn5pt/tracks-v1a1/mono.m3u8",
+
+"espndeportes": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NDhlN2YzY2RmMjFkLTkyNTktNDNkNC02M2Q0LTk1YWVjODEy/master.m3u8",
+"espndeportes_1": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NDhlN2YzY2RmMjFkLTkyNTktNDNkNC02M2Q0LTk1YWVjODEy/master.m3u8",
+"espndeportes_2": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NDhlN2YzY2RmMjFkLTkyNTktNDNkNC02M2Q0LTk1YWVjODEy/master.m3u8",
+"espndeportes_3": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NDhlN2YzY2RmMjFkLTkyNTktNDNkNC02M2Q0LTk1YWVjODEy/master.m3u8",
+
+"tntar": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NzM5OTE0ODEyYTc5LThjMDgtODJmNC1mODRkLTNiZTE1NjM3/master.m3u8",
+"tntar_1": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NzM5OTE0ODEyYTc5LThjMDgtODJmNC1mODRkLTNiZTE1NjM3/master.m3u8",
+"tntar_2": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NzM5OTE0ODEyYTc5LThjMDgtODJmNC1mODRkLTNiZTE1NjM3/master.m3u8",
+"tntar_3": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NzM5OTE0ODEyYTc5LThjMDgtODJmNC1mODRkLTNiZTE1NjM3/master.m3u8",
+
+"hypermotion": "https://ja.periquitopan.store/hypermotion/tracks-v1a1/mono.m3u8",
+"hypermotion_1": "https://ja.periquitopan.Zstore/hypermotion/tracks-v1a1/mono.m3u8",
+"hypermotion_2": "https://ja.periquitopan.store/hypermotion/tracks-v1a1/mono.m3u8",
+"hypermotion_3": "https://ja.periquitopan.store/hypermotion/tracks-v1a1/mono.m3u8",
+
+"hypermotion2": "https://ja.periquitopan.store/hypermotion2/tracks-v1a1/mono.m3u8",
+"hypermotion2_1": "https://ja.periquitopan.store/hypermotion2/tracks-v1a1/mono.m3u8",
+"hypermotion2_2": "https://ja.periquitopan.store/hypermotion2/tracks-v1a1/mono.m3u8",
+"hypermotion2_3": "https://ja.periquitopan.store/hypermotion2/tracks-v1a1/mono.m3u8",
+
+"dazn1": "https://ja.periquitopan.store/dazn1/tracks-v1a1/mono.m3u8",
+"dazn1_1": "https://ja.periquitopan.store/dazn1/tracks-v1a1/mono.m3u8",
+"dazn1_2": "https://ja.periquitopan.store/dazn1/tracks-v1a1/mono.m3u8",
+"dazn1_3": "https://ja.periquitopan.store/dazn1/tracks-v1a1/mono.m3u8",
+
+"dazn2": "https://ja.periquitopan.store/dazn2/tracks-v1a1/mono.m3u8",
+"dazn2_1": "https://ja.periquitopan.store/dazn2/tracks-v1a1/mono.m3u8",
+"dazn2_2": "https://ja.periquitopan.store/dazn2/tracks-v1a1/mono.m3u8",
+"dazn2_3": "https://ja.periquitopan.store/dazn2/tracks-v1a1/mono.m3u8",
+
+"dazn3": "https://ja.periquitopan.store/dazn3/tracks-v1a1/mono.m3u8",
+"dazn3_1": "https://ja.periquitopan.store/dazn3/tracks-v1a1/mono.m3u8",
+"dazn3_2": "https://ja.periquitopan.store/dazn3/tracks-v1a1/mono.m3u8",
+"dazn3_3": "https://ja.periquitopan.store/dazn3/tracks-v1a1/mono.m3u8",
+
+"dazn4": "https://ja.periquitopan.store/dazn4/tracks-v1a1/mono.m3u8",
+"dazn4_1": "https://ja.periquitopan.store/dazn4/tracks-v1a1/mono.m3u8",
+"dazn4_2": "https://ja.periquitopan.store/dazn4/tracks-v1a1/mono.m3u8",
+"dazn4_3": "https://ja.periquitopan.store/dazn4/tracks-v1a1/mono.m3u8",
+
+"tvela1": "https://ja.periquitopan.store/tvela1/tracks-v1a1/mono.m3u8",
+"tvela1_1": "https://ja.periquitopan.store/tvela1/tracks-v1a1/mono.m3u8",
+"tvela1_2": "https://ja.periquitopan.store/tvela1/tracks-v1a1/mono.m3u8",
+"tvela1_3": "https://ja.periquitopan.store/tvela1/tracks-v1a1/mono.m3u8",
+
+"laligauk": "https://ja.periquitopan.store/laligauk/tracks-v1a1/mono.m3u8",
+"laligauk_1": "https://ja.periquitopan.store/laligauk/tracks-v1a1/mono.m3u8",
+"laligauk_2": "https://ja.periquitopan.store/laligauk/tracks-v1a1/mono.m3u8",
+"laligauk_3": "https://ja.periquitopan.store/laligauk/tracks-v1a1/mono.m3u8",
+
+"daznlaliga": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1YjQ2N2JmODEwNTg2LTY5YWItOWUyNC0xNjNkLTEzMWYzMDcy/master.m3u8",
+"daznlaliga_1": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1YjQ2N2JmODEwNTg2LTY5YWItOWUyNC0xNjNkLTEzMWYzMDcy/master.m3u8",
+"daznlaliga_2": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1YjQ2N2JmODEwNTg2LTY5YWItOWUyNC0xNjNkLTEzMWYzMDcy/master.m3u8",
+"daznlaliga_3": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1YjQ2N2JmODEwNTg2LTY5YWItOWUyNC0xNjNkLTEzMWYzMDcy/master.m3u8",    
+
+"daznlaliga2": "https://ja.periquitopan.store/daznlaliga2/tracks-v1a1/mono.m3u8",
+"daznlaliga2_1": "https://ja.periquitopan.store/daznlaliga2/tracks-v1a1/mono.m3u8",
+"daznlaliga2_2": "https://ja.periquitopan.store/daznlaliga2/tracks-v1a1/mono.m3u8",
+"daznlaliga2_3": "https://ja.periquitopan.store/daznlaliga2/tracks-v1a1/mono.m3u8",
+
+"canal11pt": "https://ja.periquitopan.store/canal11pt/tracks-v1a1/mono.m3u8",
+"canal11pt_1": "https://ja.periquitopan.store/canal11pt/tracks-v1a1/mono.m3u8",
+"canal11pt_2": "https://ja.periquitopan.store/canal11pt/tracks-v1a1/mono.m3u8",
+"canal11pt_3": "https://ja.periquitopan.store/canal11pt/tracks-v1a1/mono.m3u8",
+
+"sportvbr1": "https://ja.periquitopan.store/sportvbr1/tracks-v1a1/mono.m3u8",
+"sportvbr1_1": "https://ja.periquitopan.store/sportvbr1/tracks-v1a1/mono.m3u8",
+"sportvbr1_2": "https://ja.periquitopan.store/sportvbr1/tracks-v1a1/mono.m3u8",
+"sportvbr1_3": "https://ja.periquitopan.store/sportvbr1/tracks-v1a1/mono.m3u8",
+
+"sportv1": "https://ja.periquitopan.store/sportv1/tracks-v1a1/mono.m3u8",
+"sportv1_1": "https://ja.periquitopan.store/sportv1/tracks-v1a1/mono.m3u8",
+"sportv1_2": "https://ja.periquitopan.store/sportv1/tracks-v1a1/mono.m3u8",
+"sportv1_3": "https://ja.periquitopan.store/sportv1/tracks-v1a1/mono.m3u8",
+
+"sportv2": "https://ja.periquitopan.store/sportv2/tracks-v1a1/mono.m3u8",
+"sportv2_1": "https://ja.periquitopan.store/sportv2/tracks-v1a1/mono.m3u8",
+"sportv2_2": "https://ja.periquitopan.store/sportv2/tracks-v1a1/mono.m3u8",
+"sportv2_3": "https://ja.periquitopan.store/sportv2/tracks-v1a1/mono.m3u8",
+
+"sportv3": "https://ja.periquitopan.store/sportv3/tracks-v1a1/mono.m3u8",
+"sportv3_1": "https://ja.periquitopan.store/sportv3/tracks-v1a1/mono.m3u8",
+"sportv3_2": "https://ja.periquitopan.store/sportv3/tracks-v1a1/mono.m3u8",
+"sportv3_3": "https://ja.periquitopan.store/sportv3/tracks-v1a1/mono.m3u8",
+
+"sportv4": "https://ja.periquitopan.store/sportv4/tracks-v1a1/mono.m3u8",
+"sportv4_1": "https://ja.periquitopan.store/sportv4/tracks-v1a1/mono.m3u8",
+"sportv4_2": "https://ja.periquitopan.store/sportv4/tracks-v1a1/mono.m3u8",
+"sportv4_3": "https://ja.periquitopan.store/sportv4/tracks-v1a1/mono.m3u8",
+
+"sportv5": "https://ja.periquitopan.store/sportv5/tracks-v1a1/mono.m3u8",
+"sportv5_1": "https://ja.periquitopan.store/sportv5/tracks-v1a1/mono.m3u8",
+"sportv5_2": "https://ja.periquitopan.store/sportv5/tracks-v1a1/mono.m3u8",
+"sportv5_3": "https://ja.periquitopan.store/sportv5/tracks-v1a1/mono.m3u8",
+
+"sportv6": "https://ja.periquitopan.store/sportv6/tracks-v1a1/mono.m3u8",
+
+"winsportsplus": "https://ja.periquitopan.store/winsportsplus/tracks-v1a1/mono.m3u8",
+"winsportsplus_1": "https://ja.periquitopan.store/winsportsplus/tracks-v1a1/mono.m3u8",
+"winsportsplus_2": "https://ja.periquitopan.store/winsportsplus/tracks-v1a1/mono.m3u8",
+"winsportsplus_3": "https://ja.periquitopan.store/winsportsplus/tracks-v1a1/mono.m3u8",
+
+"winsports": "https://ja.periquitopan.store/winsports/tracks-v1a1/mono.m3u8",
+"winsports_1": "https://ja.periquitopan.store/winsports/tracks-v1a1/mono.m3u8",
+"winsports_2": "https://ja.periquitopan.store/winsports/tracks-v1a1/mono.m3u8",
+"winsports_3": "https://ja.periquitopan.store/winsports/tracks-v1a1/mono.m3u8",
+
+"universo": "https://ja.periquitopan.store/universo/tracks-v1a1/mono.m3u8",
+"universo_1": "https://ja.periquitopan.store/universo/tracks-v1a1/mono.m3u8",
+"universo_2": "https://ja.periquitopan.store/universo/tracks-v1a1/mono.m3u8",
+"universo_3": "https://ja.periquitopan.store/universo/tracks-v1a1/mono.m3u8",
+
+"telemundo": "https://ja.periquitopan.store/telemundo/tracks-v1a1/mono.m3u8",
+"telemundo_1": "https://ja.periquitopan.store/telemundo/tracks-v1a1/mono.m3u8",
+"telemundo_2": "https://ja.periquitopan.store/telemundo/tracks-v1a1/mono.m3u8",
+"telemundo_3": "https://ja.periquitopan.store/telemundo/tracks-v1a1/mono.m3u8",
+
+"usanetwork": "https://ja.periquitopan.store/usanetwork/tracks-v1a1/mono.m3u8",
+"usanetwork_1": "https://ja.periquitopan.store/usanetwork/tracks-v1a1/mono.m3u8",
+"usanetwork_2": "https://ja.periquitopan.store/usanetwork/tracks-v1a1/mono.m3u8",
+"usanetwork_3": "https://ja.periquitopan.store/usanetwork/tracks-v1a1/mono.m3u8",
+
+"tudnusa": "https://ja.periquitopan.store/tudnusa/tracks-v1a1/mono.m3u8",
+"tudnusa_1": "https://ja.periquitopan.store/tudnusa/tracks-v1a1/mono.m3u8",
+"tudnusa_2": "https://ja.periquitopan.store/tudnusa/tracks-v1a1/mono.m3u8",
+"tudnusa_3": "https://ja.periquitopan.store/tudnusa/tracks-v1a1/mono.m3u8",
+
+"unimas": "https://ja.periquitopan.store/unimas/tracks-v1a1/mono.m3u8",
+"unimas_1": "https://ja.periquitopan.store/unimas/tracks-v1a1/mono.m3u8",
+"unimas_2": "https://ja.periquitopan.store/unimas/tracks-v1a1/mono.m3u8",
+"unimas_3": "https://ja.periquitopan.store/unimas/tracks-v1a1/mono.m3u8",
+
+"tudnmx": "https://ja.periquitopan.store/tudnmx/tracks-v1a1/mono.m3u8",
+"tudnmx_1": "https://ja.periquitopan.store/tudnmx/tracks-v1a1/mono.m3u8",
+"tudnmx_2": "https://ja.periquitopan.store/tudnmx/tracks-v1a1/mono.m3u8",
+"tudnmx_3": "https://ja.periquitopan.store/tudnmx/tracks-v1a1/mono.m3u8",
+
+"azteca7": "https://ja.periquitopan.store/azteca7/tracks-v1a1/mono.m3u8",
+"azteca7_1": "https://ja.periquitopan.store/azteca7/tracks-v1a1/mono.m3u8",
+"azteca7_2": "https://ja.periquitopan.store/azteca7/tracks-v1a1/mono.m3u8",
+"azteca7_3": "https://ja.periquitopan.store/azteca7/tracks-v1a1/mono.m3u8",
+
+"aztecadeportes": "https://ja.periquitopan.store/aztecadeportes/tracks-v1a1/mono.m3u8",
+"aztecadeportes_1": "https://ja.periquitopan.store/aztecadeportes/tracks-v1a1/mono.m3u8",
+"aztecadeportes_2": "https://njdiauer.mbappeoffsidel.site/aztecadeportes/tracks-v1a1/mono.m3u8",
+"aztecadeportes_3": "https://ja.periquitopan.store/aztecadeportes/tracks-v1a1/mono.m3u8",
+
+"liga1max": "https://ja.periquitopan.store/liga1max/tracks-v1a1/mono.m3u8",
+"liga1max_1": "https://ja.periquitopan.store/liga1max/tracks-v1a1/mono.m3u8",
+"liga1max_2": "https://ja.periquitopan.store/liga1max/tracks-v1a1/mono.m3u8",
+"liga1max_3": "https://ja.periquitopan.store/liga1max/tracks-v1a1/mono.m3u8",
+
+"americatv": "https://ja.periquitopan.store/americatv/tracks-v1a1/mono.m3u8",
+"americatv_1": "https://ja.periquitopan.store/americatv/tracks-v1a1/mono.m3u8",
+"americatv_2": "https://ja.periquitopan.store/americatv/tracks-v1a1/mono.m3u8",
+"americatv_3": "https://ja.periquitopan.store/americatv/tracks-v1a1/mono.m3u8",
+
+"atv": "https://ja.periquitopan.store/atvpe/tracks-v1a1/mono.m3u8",
+"atv_1": "https://ja.periquitopan.store/atvpe/tracks-v1a1/mono.m3u8",
+"atv_2": "https://ja.periquitopan.store/atvpe/tracks-v1a1/mono.m3u8",
+"atv_3": "https://ja.periquitopan.store/atvpe/tracks-v1a1/mono.m3u8",
+
+"golperu": "https://ja.periquitopan.store/golperu/tracks-v1a1/mono.m3u8",
+"golperu_1": "https://ja.periquitopan.store/golperu/tracks-v1a1/mono.m3u8",
+"golperu_2": "https://ja.periquitopan.store/golperu/tracks-v1a1/mono.m3u8",
+"golperu_3": "https://ja.periquitopan.store/golperu/tracks-v1a1/mono.m3u8",
+
+"latinape": "https://ja.periquitopan.store/latinape/tracks-v1a1/mono.m3u8",
+"latinape_1": "https://ja.periquitopan.store/latinape/tracks-v1a1/mono.m3u8",
+"latinape_2": "https://ja.periquitopan.store/latinape/tracks-v1a1/mono.m3u8",
+"latinape_3": "https://ja.periquitopan.store/latinape/tracks-v1a1/mono.m3u8",
+
+"foxpremium": "https://ja.periquitopan.store/foxpremium/tracks-v1a1/mono.m3u8",
+"foxpremium_1": "https://ja.periquitopan.store/foxpremium/tracks-v1a1/mono.m3u8",
+"foxpremium_2": "https://ja.periquitopan.store/foxpremium/tracks-v1a1/mono.m3u8",
+"foxpremium_3": "https://ja.periquitopan.store/foxpremium/tracks-v1a1/mono.m3u8",
+
+"tntpremium": "https://ja.periquitopan.store/tntpremium/tracks-v1a1/mono.m3u8",
+"tntpremium_1": "https://ja.periquitopan.store/tntpremium/tracks-v1a1/mono.m3u8",
+"tntpremium_2": "https://ja.periquitopan.store/tntpremium/tracks-v1a1/mono.m3u8",
+"tntpremium_3": "https://ja.periquitopan.store/tntpremium/tracks-v1a1/mono.m3u8",
+
+"tvn": "https://ja.periquitopan.store/tvn/tracks-v1a1/mono.m3u8",
+"tvn_1": "https://ja.periquitopan.store/tvn/tracks-v1a1/mono.m3u8",
+"tvn_2": "https://ja.periquitopan.store/tvn/tracks-v1a1/mono.m3u8",
+"tvn_3": "https://ja.periquitopan.store/tvn/tracks-v1a1/mono.m3u8",
+
+"premiere": "https://ja.periquitopan.store/premiere/tracks-v1a1/mono.m3u8",
+"premiere_1": "https://ja.periquitopan.store/premiere/tracks-v1a1/mono.m3u8",
+"premiere_2": "https://ja.periquitopan.store/premiere/tracks-v1a1/mono.m3u8",
+"premiere_3": "https://ja.periquitopan.store/premiere/tracks-v1a1/mono.m3u8",
+
+"premiere2": "https://ja.periquitopan.store/premiere2/tracks-v1a1/mono.m3u8",
+"premiere2_1": "https://ja.periquitopan.store/premiere2/tracks-v1a1/mono.m3u8",
+"premiere2_2": "https://ja.periquitopan.store/premiere2/tracks-v1a1/mono.m3u8",
+"premiere2_3": "https://ja.periquitopan.store/premiere2/tracks-v1a1/mono.m3u8",
+
+"premiere3": "https://ja.periquitopan.store/premiere3/tracks-v1a1/mono.m3u8",
+"premiere3_1": "https://ja.periquitopan.store/premiere3/tracks-v1a1/mono.m3u8",
+"premiere3_2": "https://ja.periquitopan.store/premiere3/tracks-v1a1/mono.m3u8",
+"premiere3_3": "https://ja.periquitopan.store/premiere3/tracks-v1a1/mono.m3u8",
+
+"premiere4": "https://ja.periquitopan.store/premiere4/tracks-v1a1/mono.m3u8",
+"premiere4_1": "https://ja.periquitopan.store/premiere4/tracks-v1a1/mono.m3u8",
+"premiere4_2": "https://ja.periquitopan.store/premiere4/tracks-v1a1/mono.m3u8",
+"premiere4_3": "https://ja.periquitopan.store/premiere4/tracks-v1a1/mono.m3u8",
+
+"premiere5": "https://ja.periquitopan.store/premiere5/tracks-v1a1/mono.m3u8",
+"premiere5_1": "https://ja.periquitopan.store/premiere5/tracks-v1a1/mono.m3u8",
+"premiere5_2": "https://ja.periquitopan.store/premiere5/tracks-v1a1/mono.m3u8",
+"premiere5_3": "https://ja.periquitopan.store/premiere5/tracks-v1a1/mono.m3u8",
+
+"premiere6": "https://ja.periquitopan.store/premiere6/tracks-v1a1/mono.m3u8",
+"premiere6_1": "https://ja.periquitopan.store/premiere6/tracks-v1a1/mono.m3u8",
+"premiere6_2": "https://ja.periquitopan.store/premiere6/tracks-v1a1/mono.m3u8",
+"premiere6_3": "https://ja.periquitopan.store/premiere6/tracks-v1a1/mono.m3u8",
+
+"premiere6": "https://ja.periquitopan.store/premiere6/tracks-v1a1/mono.m3u8",
+"premiere6_1": "https://ja.periquitopan.store/premiere6/tracks-v1a1/mono.m3u8",
+"premiere6_2": "https://ja.periquitopan.store/premiere6/tracks-v1a1/mono.m3u8",
+"premiere6_3": "https://ja.periquitopan.store/premiere6/tracks-v1a1/mono.m3u8",
+
+"premiere7": "https://ja.periquitopan.store/premiere7/tracks-v1a1/mono.m3u8",
+"premiere7_1": "https://ja.periquitopan.store/premiere7/tracks-v1a1/mono.m3u8",
+"premiere7_2": "https://ja.periquitopan.store/premiere7/tracks-v1a1/mono.m3u8",
+"premiere7_3": "https://ja.periquitopan.store/premiere7/tracks-v1a1/mono.m3u8",
+
+"premiere8": "https://ja.periquitopan.store/premiere8/tracks-v1a1/mono.m3u8",
+"premiere8_1": "https://ja.periquitopan.store/premiere8/tracks-v1a1/mono.m3u8",
+"premiere8_2": "https://ja.periquitopan.store/premiere8/tracks-v1a1/mono.m3u8",
+"premiere8_3": "https://ja.periquitopan.store/premiere8/tracks-v1a1/mono.m3u8",
+
+"premiere9": "https://ja.periquitopan.store/premiere9/tracks-v1a1/mono.m3u8",
+"premiere9_1": "https://ja.periquitopan.store/premiere9/tracks-v1a1/mono.m3u8",
+"premiere9_2": "https://ja.periquitopan.store/premiere9/tracks-v1a1/mono.m3u8",
+"premiere9_3": "https://ja.periquitopan.store/premiere9/tracks-v1a1/mono.m3u8",
+
+"premiere10": "https://ja.periquitopan.store/premiere10/tracks-v1a1/mono.m3u8",
+"premiere10_1": "https://ja.periquitopan.store/premiere10/tracks-v1a1/mono.m3u8",
+"premiere10_2": "https://ja.periquitopan.store/premiere10/tracks-v1a1/mono.m3u8",
+"premiere10_3": "https://ja.periquitopan.store/premiere10/tracks-v1a1/mono.m3u8",
+
+"espnplus1": "https://ja.periquitopan.store/espnplus1/tracks-v1a1/mono.m3u8",
+"espnplus1_1": "https://ja.periquitopan.store/espnplus1/tracks-v1a1/mono.m3u8",
+"espnplus1_2": "https://ja.periquitopan.store/espnplus1/tracks-v1a1/mono.m3u8",
+"espnplus1_3": "https://ja.periquitopan.store/espnplus1/tracks-v1a1/mono.m3u8",
+
+"espnplus2": "https://ja.periquitopan.store/espnplus2/tracks-v1a1/mono.m3u8",
+"espnplus2_1": "https://ja.periquitopan.store/espnplus2/tracks-v1a1/mono.m3u8",
+"espnplus2_2": "https://ja.periquitopan.store/espnplus2/tracks-v1a1/mono.m3u8",
+"espnplus2_3": "https://ja.periquitopan.store/espnplus2/tracks-v1a1/mono.m3u8",
+
+"espnplus3": "https://ja.periquitopan.store/espnplus3/tracks-v1a1/mono.m3u8",
+"espnplus3_1": "https://ja.periquitopan.store/espnplus3/tracks-v1a1/mono.m3u8",
+"espnplus3_2": "https://ja.periquitopan.store/espnplus3/tracks-v1a1/mono.m3u8",
+"espnplus3_3": "https://ja.periquitopan.store/espnplus3/tracks-v1a1/mono.m3u8",
+
+"espnplus4": "https://ja.periquitopan.store/espnplus4/tracks-v1a1/mono.m3u8",
+"espnplus4_1": "https://ja.periquitopan.store/espnplus4/tracks-v1a1/mono.m3u8",
+"espnplus4_2": "https://ja.periquitopan.store/espnplus4/tracks-v1a1/mono.m3u8",
+"espnplus4_3": "https://ja.periquitopan.store/espnplus4/tracks-v1a1/mono.m3u8",
+
+"espnplus5": "https://ja.periquitopan.store/espnplus5/tracks-v1a1/mono.m3u8",
+"espnplus5_1": "https://ja.periquitopan.store/espnplus5/tracks-v1a1/mono.m3u8",
+"espnplus5_2": "https://ja.periquitopan.store/espnplus5/tracks-v1a1/mono.m3u8",
+"espnplus5_3": "https://ja.periquitopan.store/espnplus5/tracks-v1a1/mono.m3u8",
+
+"espnplus6": "https://ja.periquitopan.store/espnplus6/tracks-v1a1/mono.m3u8",
+"espnplus6_1": "https://ja.periquitopan.store/espnplus6/tracks-v1a1/mono.m3u8",
+"espnplus6_2": "https://ja.periquitopan.store/espnplus6/tracks-v1a1/mono.m3u8",
+"espnplus6_3": "https://ja.periquitopan.store/espnplus6/tracks-v1a1/mono.m3u8",
+
+"espnplus7": "https://ja.periquitopan.store/espnplus7/tracks-v1a1/mono.m3u8",
+"espnplus7_1": "https://ja.periquitopan.store/espnplus7/tracks-v1a1/mono.m3u8",
+"espnplus7_2": "https://ja.periquitopan.store/espnplus7/tracks-v1a1/mono.m3u8",
+"espnplus7_3": "https://ja.periquitopan.store/espnplus7/tracks-v1a1/mono.m3u8",
+
+"espnplus8": "https://ja.periquitopan.store/espnplus8/tracks-v1a1/mono.m3u8",
+"espnplus8_1": "https://ja.periquitopan.store/espnplus8/tracks-v1a1/mono.m3u8",
+"espnplus8_2": "https://ja.periquitopan.store/espnplus8/tracks-v1a1/mono.m3u8",
+"espnplus8_3": "https://ja.periquitopan.store/espnplus8/tracks-v1a1/mono.m3u8",
+
+"espnplus9": "https://ja.periquitopan.store/espnplus9/tracks-v1a1/mono.m3u8",
+"espnplus9_1": "https://ja.periquitopan.store/espnplus9/tracks-v1a1/mono.m3u8",
+"espnplus9_2": "https://ja.periquitopan.store/espnplus9/tracks-v1a1/mono.m3u8",
+"espnplus9_3": "https://ja.periquitopan.store/espnplus9/tracks-v1a1/mono.m3u8",
+
+"espnplus10": "https://ja.periquitopan.store/espnplus10/tracks-v1a1/mono.m3u8",
+"espnplus10_1": "https://ja.periquitopan.store/espnplus10/tracks-v1a1/mono.m3u8",
+"espnplus10_2": "https://ja.periquitopan.store/espnplus10/tracks-v1a1/mono.m3u8",
+"espnplus10_3": "https://ja.periquitopan.store/espnplus10/tracks-v1a1/mono.m3u8",
+
+"espnplus10": "https://ja.periquitopan.store/espnplus10/tracks-v1a1/mono.m3u8",
+"espnplus10_1": "https://ja.periquitopan.store/espnplus10/tracks-v1a1/mono.m3u8",
+"espnplus10_2": "https://ja.periquitopan.store/espnplus10/tracks-v1a1/mono.m3u8",
+"espnplus10_3": "https://ja.periquitopan.store/espnplus10/tracks-v1a1/mono.m3u8",
+
+"espnplus11": "https://ja.periquitopan.store/espnplus11/tracks-v1a1/mono.m3u8",
+"espnplus11_1": "https://ja.periquitopan.store/espnplus11/tracks-v1a1/mono.m3u8",
+"espnplus11_2": "https://ja.periquitopan.store/espnplus11/tracks-v1a1/mono.m3u8",
+"espnplus11_3": "https://ja.periquitopan.store/espnplus11/tracks-v1a1/mono.m3u8",
+
+"espnplus12": "https://ja.periquitopan.store/espnplus12/tracks-v1a1/mono.m3u8",
+"espnplus12_1": "https://ja.periquitopan.store/espnplus12/tracks-v1a1/mono.m3u8",
+"espnplus12_2": "https://ja.periquitopan.store/espnplus12/tracks-v1a1/mono.m3u8",
+"espnplus12_3": "https://ja.periquitopan.store/espnplus12/tracks-v1a1/mono.m3u8",
+
+"espnplus13": "https://ja.periquitopan.store/espnplus13/tracks-v1a1/mono.m3u8",
+"espnplus13_1": "https://ja.periquitopan.store/espnplus13/tracks-v1a1/mono.m3u8",
+"espnplus13_2": "https://ja.periquitopan.store/espnplus13/tracks-v1a1/mono.m3u8",
+"espnplus13_3": "https://ja.periquitopan.store/espnplus13/tracks-v1a1/mono.m3u8",
+
+"espnplus14": "https://ja.periquitopan.store/espnplus14/tracks-v1a1/mono.m3u8",
+"espnplus14_1": "https://ja.periquitopan.store/espnplus14/tracks-v1a1/mono.m3u8",
+"espnplus14_2": "https://ja.periquitopan.store/espnplus14/tracks-v1a1/mono.m3u8",
+"espnplus14_3": "https://ja.periquitopan.store/espnplus14/tracks-v1a1/mono.m3u8",
+
+"espnplus15": "https://ja.periquitopan.store/espnplus15/tracks-v1a1/mono.m3u8",
+"espnplus15_1": "https://ja.periquitopan.store/espnplus15/tracks-v1a1/mono.m3u8",
+"espnplus15_2": "https://ja.periquitopan.store/espnplus15/tracks-v1a1/mono.m3u8",
+"espnplus15_3": "https://ja.periquitopan.store/espnplus15/tracks-v1a1/mono.m3u8",
+
+"nfl1": "https://ja.periquitopan.store/nfl1/tracks-v1a1/mono.m3u8",
+"nfl1_1": "https://ja.periquitopan.store/nfl1/tracks-v1a1/mono.m3u8",
+"nfl1_2": "https://ja.periquitopan.store/nfl1/tracks-v1a1/mono.m3u8",
+"nfl1_3": "https://ja.periquitopan.store/nfl1/tracks-v1a1/mono.m3u8",
+
+"nfl2": "https://ja.periquitopan.store/nfl2/tracks-v1a1/mono.m3u8",
+"nfl2_1": "https://ja.periquitopan.store/nfl2/tracks-v1a1/mono.m3u8",
+"nfl2_2": "https://ja.periquitopan.store/nfl2/tracks-v1a1/mono.m3u8",
+"nfl2_3": "https://ja.periquitopan.store/nfl2/tracks-v1a1/mono.m3u8",
+
+"nfl3": "https://ja.periquitopan.store/nfl3/tracks-v1a1/mono.m3u8",
+"nfl3_1": "https://ja.periquitopan.store/nfl3/tracks-v1a1/mono.m3u8",
+"nfl3_2": "https://ja.periquitopan.store/nfl3/tracks-v1a1/mono.m3u8",
+"nfl3_3": "https://ja.periquitopan.store/nfl3/tracks-v1a1/mono.m3u8",
+
+"nfl4": "https://ja.periquitopan.store/nfl4/tracks-v1a1/mono.m3u8",
+"nfl4_1": "https://ja.periquitopan.store/nfl4/tracks-v1a1/mono.m3u8",
+"nfl4_2": "https://ja.periquitopan.store/nfl4/tracks-v1a1/mono.m3u8",
+"nfl4_3": "https://ja.periquitopan.store/nfl4/tracks-v1a1/mono.m3u8",
+
+"nfl5": "https://ja.periquitopan.store/nfl5/tracks-v1a1/mono.m3u8",
+"nfl5_1": "https://ja.periquitopan.store/nfl5/tracks-v1a1/mono.m3u8",
+"nfl5_2": "https://ja.periquitopan.store/nfl5/tracks-v1a1/mono.m3u8",
+"nfl5_3": "https://ja.periquitopan.store/nfl5/tracks-v1a1/mono.m3u8",
+
+"nfl6": "https://ja.periquitopan.store/nfl6/tracks-v1a1/mono.m3u8",
+"nfl6_1": "https://ja.periquitopan.store/nfl6/tracks-v1a1/mono.m3u8",
+"nfl6_2": "https://ja.periquitopan.store/nfl6/tracks-v1a1/mono.m3u8",
+"nfl6_3": "https://ja.periquitopan.store/nfl6/tracks-v1a1/mono.m3u8",
+
+"nfl7": "https://ja.periquitopan.store/nfl7/tracks-v1a1/mono.m3u8",
+"nfl7_1": "https://ja.periquitopan.store/nfl7/tracks-v1a1/mono.m3u8",
+"nfl7_2": "https://ja.periquitopan.store/nfl7/tracks-v1a1/mono.m3u8",
+"nfl7_3": "https://ja.periquitopan.store/nfl7/tracks-v1a1/mono.m3u8",
+
+"nfl8": "https://ja.periquitopan.store/nfl8/tracks-v1a1/mono.m3u8",
+"nfl8_1": "https://ja.periquitopan.store/nfl8/tracks-v1a1/mono.m3u8",
+"nfl8_2": "https://ja.periquitopan.store/nfl8/tracks-v1a1/mono.m3u8",
+"nfl8_3": "https://ja.periquitopan.store/nfl8/tracks-v1a1/mono.m3u8",
+
+"nfl9": "https://ja.periquitopan.store/nfl9/tracks-v1a1/mono.m3u8",
+"nfl9_1": "https://ja.periquitopan.store/nfl9/tracks-v1a1/mono.m3u8",
+"nfl9_2": "https://ja.periquitopan.store/nfl9/tracks-v1a1/mono.m3u8",
+"nfl9_3": "https://ja.periquitopan.store/nfl9/tracks-v1a1/mono.m3u8",
+
+"nfl10": "https://ja.periquitopan.store/nfl10/tracks-v1a1/mono.m3u8",
+"nfl10_1": "https://ja.periquitopan.store/nfl10/tracks-v1a1/mono.m3u8",
+"nfl10_2": "https://ja.periquitopan.store/nfl10/tracks-v1a1/mono.m3u8",
+"nfl10_3": "https://ja.periquitopan.store/nfl10/tracks-v1a1/mono.m3u8",
+
+"paramount1": "https://ja.periquitopan.store/paramount1/tracks-v1a1/mono.m3u8",
+"paramount1_1": "https://ja.periquitopan.store/paramount1/tracks-v1a1/mono.m3u8",
+"paramount1_2": "https://ja.periquitopan.store/paramount1/tracks-v1a1/mono.m3u8",
+"paramount1_3": "https://ja.periquitopan.store/paramount1/tracks-v1a1/mono.m3u8",
+
+"paramount2": "https://ja.periquitopan.store/paramount2/tracks-v1a1/mono.m3u8",
+"paramount2_1": "https://ja.periquitopan.store/paramount2/tracks-v1a1/mono.m3u8",
+"paramount2_2": "https://ja.periquitopan.store/paramount2/tracks-v1a1/mono.m3u8",
+"paramount2_3": "https://ja.periquitopan.store/paramount2/tracks-v1a1/mono.m3u8",
+
+"paramount3": "https://ja.periquitopan.store/paramount3/tracks-v1a1/mono.m3u8",
+"paramount3_1": "https://ja.periquitopan.store/paramount3/tracks-v1a1/mono.m3u8",
+"paramount3_2": "https://ja.periquitopan.store/paramount3/tracks-v1a1/mono.m3u8",
+"paramount3_3": "https://ja.periquitopan.store/paramount3/tracks-v1a1/mono.m3u8",
+
+"paramount4": "https://ja.periquitopan.store/paramount4/tracks-v1a1/mono.m3u8",
+"paramount4_1": "https://ja.periquitopan.store/paramount4/tracks-v1a1/mono.m3u8",
+"paramount4_2": "https://ja.periquitopan.store/paramount4/tracks-v1a1/mono.m3u8",
+"paramount4_3": "https://ja.periquitopan.store/paramount4/tracks-v1a1/mono.m3u8",
+
+"paramount5": "https://ja.periquitopan.store/paramount5/tracks-v1a1/mono.m3u8",
+"paramount5_1": "https://ja.periquitopan.store/paramount5/tracks-v1a1/mono.m3u8",
+"paramount5_2": "https://ja.periquitopan.store/paramount5/tracks-v1a1/mono.m3u8",
+"paramount5_3": "https://ja.periquitopan.store/paramount5/tracks-v1a1/mono.m3u8",
+
+"paramount6": "https://ja.periquitopan.store/paramount6/tracks-v1a1/mono.m3u8",
+"paramount6_1": "https://ja.periquitopan.store/paramount6/tracks-v1a1/mono.m3u8",
+"paramount6_2": "https://ja.periquitopan.store/paramount6/tracks-v1a1/mono.m3u8",
+"paramount6_3": "https://ja.periquitopan.store/paramount6/tracks-v1a1/mono.m3u8",
+
+"paramount7": "https://ja.periquitopan.store/paramount7/tracks-v1a1/mono.m3u8",
+"paramount7_1": "https://ja.periquitopan.store/paramount7/tracks-v1a1/mono.m3u8",
+"paramount7_2": "https://ja.periquitopan.store/paramount7/tracks-v1a1/mono.m3u8",
+"paramount7_3": "https://ja.periquitopan.store/paramount7/tracks-v1a1/mono.m3u8",
+
+"paramount8": "https://ja.periquitopan.store/paramount8/tracks-v1a1/mono.m3u8",
+"paramount8_1": "https://ja.periquitopan.store/paramount8/tracks-v1a1/mono.m3u8",
+"paramount8_2": "https://ja.periquitopan.store/paramount8/tracks-v1a1/mono.m3u8",
+"paramount8_3": "https://ja.periquitopan.store/paramount8/tracks-v1a1/mono.m3u8",
+
+"paramount9": "https://ja.periquitopan.store/paramount9/tracks-v1a1/mono.m3u8",
+"paramount9_1": "https://ja.periquitopan.store/paramount9/tracks-v1a1/mono.m3u8",
+"paramount9_2": "https://ja.periquitopan.store/paramount9/tracks-v1a1/mono.m3u8",
+"paramount9_3": "https://ja.periquitopan.store/paramount9/tracks-v1a1/mono.m3u8",
+
+"paramount10": "https://ja.periquitopan.store/paramount10/tracks-v1a1/mono.m3u8",
+"paramount10_1": "https://ja.periquitopan.store/paramount10/tracks-v1a1/mono.m3u8",
+"paramount10_2": "https://ja.periquitopan.store/paramount10/tracks-v1a1/mono.m3u8",
+"paramount10_3": "https://ja.periquitopan.store/paramount10/tracks-v1a1/mono.m3u8",
+
+"paramount11": "https://ja.periquitopan.store/paramount11/tracks-v1a1/mono.m3u8",
+"paramount11_1": "https://ja.periquitopan.store/paramount11/tracks-v1a1/mono.m3u8",
+"paramount11_2": "https://ja.periquitopan.store/paramount11/tracks-v1a1/mono.m3u8",
+"paramount11_3": "https://ja.periquitopan.store/paramount11/tracks-v1a1/mono.m3u8",
+
+"paramount12": "https://ja.periquitopan.store/paramount12/tracks-v1a1/mono.m3u8",
+"paramount12_1": "https://ja.periquitopan.store/paramount12/tracks-v1a1/mono.m3u8",
+"paramount12_2": "https://ja.periquitopan.store/paramount12/tracks-v1a1/mono.m3u8",
+"paramount12_3": "https://ja.periquitopan.store/paramount12/tracks-v1a1/mono.m3u8",
+
+"paramount13": "https://ja.periquitopan.store/paramount13/tracks-v1a1/mono.m3u8",
+"paramount13_1": "https://ja.periquitopan.store/paramount13/tracks-v1a1/mono.m3u8",
+"paramount13_2": "https://ja.periquitopan.store/paramount13/tracks-v1a1/mono.m3u8",
+"paramount13_3": "https://ja.periquitopan.store/paramount13/tracks-v1a1/mono.m3u8",
+
+"paramount14": "https://ja.periquitopan.store/paramount14/tracks-v1a1/mono.m3u8",
+"paramount14_1": "https://ja.periquitopan.store/paramount14/tracks-v1a1/mono.m3u8",
+"paramount14_2": "https://ja.periquitopan.store/paramount14/tracks-v1a1/mono.m3u8",
+"paramount14_3": "https://ja.periquitopan.store/paramount14/tracks-v1a1/mono.m3u8",
+
+"paramount15": "https://ja.periquitopan.store/paramount15/tracks-v1a1/mono.m3u8",
+"paramount15_1": "https://ja.periquitopan.store/paramount15/tracks-v1a1/mono.m3u8",
+"paramount15_2": "https://ja.periquitopan.store/paramount15/tracks-v1a1/mono.m3u8",
+"paramount15_3": "https://ja.periquitopan.store/paramount15/tracks-v1a1/mono.m3u8",
+
+"mcopadelrey": "https://ja.periquitopan.store/mcopadelrey/tracks-v1a1/mono.m3u8",
+"mcopadelrey_1": "https://ja.periquitopan.store/mcopadelrey/tracks-v1a1/mono.m3u8",
+"mcopadelrey_2": "https://ja.periquitopan.store/mcopadelrey/tracks-v1a1/mono.m3u8",
+"mcopadelrey_3": "https://ja.periquitopan.store/mcopadelrey/tracks-v1a1/mono.m3u8",
+
+"msupercopa": "https://ja.periquitopan.store/msupercopa/tracks-v1a1/mono.m3u8",
+"msupercopa_1": "https://ja.periquitopan.store/msupercopa/tracks-v1a1/mono.m3u8",
+"msupercopa_2": "https://ja.periquitopan.store/msupercopa/tracks-v1a1/mono.m3u8",
+"msupercopa_3": "https://ja.periquitopan.store/msupercopa/tracks-v1a1/mono.m3u8",
+
+"mplus": "https://ja.periquitopan.store/mplus/tracks-v1a1/mono.m3u8",
+"mplus_1": "https://ja.periquitopan.store/mplus/tracks-v1a1/mono.m3u8",
+"mplus_2": "https://ja.periquitopan.store/mplus/tracks-v1a1/mono.m3u8",
+"mplus_3": "https://ja.periquitopan.store/mplus/tracks-v1a1/mono.m3u8",
+
+"canal4": "https://ja.periquitopan.store/canal4/tracks-v1a1/mono.m3u8",
+"canal4_1": "https://ja.periquitopan.store/canal4/tracks-v1a1/mono.m3u8",
+"canal4_2": "https://ja.periquitopan.store/canal4/tracks-v1a1/mono.m3u8",
+"canal4_3": "https://ja.periquitopan.store/canal4/tracks-v1a1/mono.m3u8",
+
+"zappingec": "https://ja.periquitopan.store/zappingec/tracks-v1a1/mono.m3u8",
+"zappingec_1": "https://ja.periquitopan.store/zappingec/tracks-v1a1/mono.m3u8",
+"zappingec_2": "https://ja.periquitopan.store/zappingec/tracks-v1a1/mono.m3u8",
+"zappingec_3": "https://ja.periquitopan.store/zappingec/tracks-v1a1/mono.m3u8",
+
+"peacock1": "https://ja.periquitopan.store/peacock1/tracks-v1a1/mono.m3u8",
+"peacock1_1": "https://ja.periquitopan.store/peacock1/tracks-v1a1/mono.m3u8",
+"peacock1_2": "https://ja.periquitopan.store/peacock1/tracks-v1a1/mono.m3u8",
+"peacock1_3": "https://ja.periquitopan.store/peacock1/tracks-v1a1/mono.m3u8",
+
+"peacock2": "https://ja.periquitopan.store/peacock2/tracks-v1a1/mono.m3u8",
+"peacock2_1": "https://ja.periquitopan.store/peacock2/tracks-v1a1/mono.m3u8",
+"peacock2_2": "https://ja.periquitopan.store/peacock2/tracks-v1a1/mono.m3u8",
+"peacock2_3": "https://ja.periquitopan.store/peacock2/tracks-v1a1/mono.m3u8",
+
+"peacock3": "https://ja.periquitopan.store/peacock3/tracks-v1a1/mono.m3u8",
+"peacock3_1": "https://ja.periquitopan.store/peacock3/tracks-v1a1/mono.m3u8",
+"peacock3_2": "https://ja.periquitopan.store/peacock3/tracks-v1a1/mono.m3u8",
+"peacock3_3": "https://ja.periquitopan.store/peacock3/tracks-v1a1/mono.m3u8",
+
+"peacock4": "https://ja.periquitopan.store/peacock4/tracks-v1a1/mono.m3u8",
+"peacock4_1": "https://ja.periquitopan.store/peacock4/tracks-v1a1/mono.m3u8",
+"peacock4_2": "https://ja.periquitopan.store/peacock4/tracks-v1a1/mono.m3u8",
+"peacock4_3": "https://ja.periquitopan.store/peacock4/tracks-v1a1/mono.m3u8",
+
+"peacock5": "https://ja.periquitopan.store/peacock5/tracks-v1a1/mono.m3u8",
+"peacock5_1": "https://ja.periquitopan.store/peacock5/tracks-v1a1/mono.m3u8",
+"peacock5_2": "https://ja.periquitopan.store/peacock5/tracks-v1a1/mono.m3u8",
+"peacock5_3": "https://ja.periquitopan.store/peacock5/tracks-v1a1/mono.m3u8",
+
+"mls": "https://ja.periquitopan.store/mls/tracks-v1a1/mono.m3u8",
+"mls_1": "https://ja.periquitopan.store/mls/tracks-v1a1/mono.m3u8",
+"mls_2": "https://ja.periquitopan.store/mls/tracks-v1a1/mono.m3u8",
+"mls_3": "https://ja.periquitopan.store/mls/tracks-v1a1/mono.m3u8",
+
+"dsports": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1ZjQ5NzlkM2JhZmI3LTlmMmItZDY0NC01YjY3LTI4MGU3OWU3/master.m3u8",
+"dsports_1": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1ZjQ5NzlkM2JhZmI3LTlmMmItZDY0NC01YjY3LTI4MGU3OWU3/master.m3u8",
+"dsports_2": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1ZjQ5NzlkM2JhZmI3LTlmMmItZDY0NC01YjY3LTI4MGU3OWU3/master.m3u8",
+"dsports_3": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1ZjQ5NzlkM2JhZmI3LTlmMmItZDY0NC01YjY3LTI4MGU3OWU3/master.m3u8",
+
+"dsports2": "https://ja.periquitopan.store/dsports2/tracks-v1a1/mono.m3u8",
+"dsports2_1": "https://ja.periquitopan.store/dsports2/tracks-v1a1/mono.m3u8",
+"dsports2_2": "https://ja.periquitopan.store/dsports2/tracks-v1a1/mono.m3u8",
+"dsports2_3": "https://ja.periquitopan.store/dsports2/tracks-v1a1/mono.m3u8",
+
+"dsportsplus": "https://ja.periquitopan.store/dsportsplus/tracks-v1a1/mono.m3u8",
+"dsportsplus_1": "https://ja.periquitopan.store/dsportsplus/tracks-v1a1/mono.m3u8",
+"dsportsplus_2": "https://ja.periquitopan.store/dsportsplus/tracks-v1a1/mono.m3u8",
+"dsportsplus_3": "https://ja.periquitopan.store/dsportsplus/tracks-v1a1/mono.m3u8",
+
+"laligabar": "https://ja.periquitopan.store/laligabar/tracks-v1a1/mono.m3u8",
+"laligabar_1": "https://ja.periquitopan.store/laligabar/tracks-v1a1/mono.m3u8",
+"laligabar_2": "https://ja.periquitopan.store/laligabar/tracks-v1a1/mono.m3u8",
+"laligabar_3": "https://ja.periquitopan.store/laligabar/tracks-v1a1/mono.m3u8",
+
+"mlaliga": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NGNiYWIwM2E1ZDRlLTcxYTgtODE2NC03YmVhLTAxMTZiZjFi/master.m3u8",
+"mlaliga_1": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NGNiYWIwM2E1ZDRlLTcxYTgtODE2NC03YmVhLTAxMTZiZjFi/master.m3u8",
+"mlaliga_2": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NGNiYWIwM2E1ZDRlLTcxYTgtODE2NC03YmVhLTAxMTZiZjFi/master.m3u8",
+"mlaliga_3": "https://director.mgi9ehlj7z061brnpp28wr2x7n9wvpr10.click/v3/director/VE1NGNiYWIwM2E1ZDRlLTcxYTgtODE2NC03YmVhLTAxMTZiZjFi/master.m3u8",
+
+"mlaliga2": "https://ja.periquitopan.store/mlaliga2/tracks-v1a1/mono.m3u8",
+"mlaliga2_1": "https://ja.periquitopan.store/mlaliga2/tracks-v1a1/mono.m3u8",
+"mlaliga2_2": "https://ja.periquitopan.store/mlaliga2/tracks-v1a1/mono.m3u8",
+"mlaliga2_3": "https://ja.periquitopan.store/mlaliga2/tracks-v1a1/mono.m3u8",
+
+"mlaliga3": "https://ja.periquitopan.store/mlaliga3/tracks-v1a1/mono.m3u8",
+"mlaliga3_1": "https://ja.periquitopan.store/mlaliga3/tracks-v1a1/mono.m3u8",
+"mlaliga3_2": "https://ja.periquitopan.store/mlaliga3/tracks-v1a1/mono.m3u8",
+"mlaliga3_3": "https://ja.periquitopan.store/mlaliga3/tracks-v1a1/mono.m3u8",
+
+"skymain": "https://ja.periquitopan.store/skymain/tracks-v1a1/mono.m3u8",
+"skymain_1": "https://ja.periquitopan.store/skymain/tracks-v1a1/mono.m3u8",
+"skymain_2": "https://ja.periquitopan.store/skymain/tracks-v1a1/mono.m3u8",
+"skymain_3": "https://ja.periquitopan.store/skymain/tracks-v1a1/mono.m3u8",
+
+"skypremier": "https://ja.periquitopan.store/skypremier/tracks-v1a1/mono.m3u8",
+
+"skyarena": "https://ja.periquitopan.store/skyarena/tracks-v1a1/mono.m3u8",
+
+"skytenis": "https://ja.periquitopan.store/skytenis/tracks-v1a1/mono.m3u8",
+
+"premiersports1": "https://ja.periquitopan.store/premiersports1/tracks-v1a1/mono.m3u8",
+
+"premiersports2": "https://ja.periquitopan.store/premiersports2/tracks-v1a1/mono.m3u8",
+
+"espnusa": "https://ja.periquitopan.store/espnusa/tracks-v1a1/mono.m3u8",
+
+"espn2usa": "https://ja.periquitopan.store/espn2usa/tracks-v1a1/mono.m3u8",
+
+
+"skyfootball": "https://ja.periquitopan.store/skyfootball/tracks-v1a1/mono.m3u8",
+"skyfootball_1": "https://ja.periquitopan.store/skyfootball/tracks-v1a1/mono.m3u8",
+"skyfootball_2": "https://ja.periquitopan.store/skyfootball/tracks-v1a1/mono.m3u8",
+"skyfootball_3": "https://ja.periquitopan.store/skyfootball/tracks-v1a1/mono.m3u8",
+
+"bbc": "https://ja.periquitopan.store/bbc/tracks-v1a1/mono.m3u8",
+"bbc_1": "https://ja.periquitopan.store/bbc/tracks-v1a1/mono.m3u8",
+"bbc_2": "https://ja.periquitopan.store/bbc/tracks-v1a1/mono.m3u8",
+"bbc_3": "https://ja.periquitopan.store/bbc/tracks-v1a1/mono.m3u8",
+
+"tntuk": "https://ja.periquitopan.store/tntuk/tracks-v1a1/mono.m3u8",
+"tntuk_1": "https://ja.periquitopan.store/tntuk/tracks-v1a1/mono.m3u8",
+"tntuk_2": "https://ja.periquitopan.store/tntuk/tracks-v1a1/mono.m3u8",
+"tntuk_3": "https://ja.periquitopan.store/tntuk/tracks-v1a1/mono.m3u8",
+
+"tnt2uk": "https://ja.periquitopan.store/tnt2uk/tracks-v1a1/mono.m3u8",
+"tnt2uk_1": "https://ja.periquitopan.store/tnt2uk/tracks-v1a1/mono.m3u8",
+"tnt2uk_2": "https://ja.periquitopan.store/tnt2uk/tracks-v1a1/mono.m3u8",
+"tnt2uk_3": "https://ja.periquitopan.store/tnt2uk/tracks-v1a1/mono.m3u8",
+
+"tnt3uk": "https://ja.periquitopan.store/tnt3uk/tracks-v1a1/mono.m3u8",
+
+"tnt4uk": "https://ja.periquitopan.store/tnt4uk/tracks-v1a1/mono.m3u8",
+
+"tnt5uk": "https://ja.periquitopan.store/tnt5uk/tracks-v1a1/mono.m3u8",
+"tnt5uk_1": "https://ja.periquitopan.store/tnt5uk/tracks-v1a1/mono.m3u8",
+"tnt5uk_2": "https://ja.periquitopan.store/tnt5uk/tracks-v1a1/mono.m3u8",
+"tnt5uk_3": "https://ja.periquitopan.store/tnt5uk/tracks-v1a1/mono.m3u8",
+
+"euroliga1": "https://ja.periquitopan.store/euroliga1/tracks-v1a1/mono.m3u8",
+"euroliga1_1": "https://ja.periquitopan.store/euroliga1/tracks-v1a1/mono.m3u8",
+"euroliga1_2": "https://ja.periquitopan.store/euroliga1/tracks-v1a1/mono.m3u8",
+"euroliga1_3": "https://ja.periquitopan.store/euroliga1/tracks-v1a1/mono.m3u8",
+
+"euroliga2": "https://ja.periquitopan.store/euroliga2/tracks-v1a1/mono.m3u8",
+"euroliga2_1": "https://ja.periquitopan.store/euroliga2/tracks-v1a1/mono.m3u8",
+"euroliga2_2": "https://ja.periquitopan.store/euroliga2/tracks-v1a1/mono.m3u8",
+"euroliga2_3": "https://ja.periquitopan.store/euroliga2/tracks-v1a1/mono.m3u8",
+
+"euroliga3": "https://ja.periquitopan.store/euroliga3/tracks-v1a1/mono.m3u8",
+"euroliga3_1": "https://ja.periquitopan.store/euroliga3/tracks-v1a1/mono.m3u8",
+"euroliga3_2": "https://ja.periquitopan.store/euroliga3/tracks-v1a1/mono.m3u8",
+"euroliga3_3": "https://ja.periquitopan.store/euroliga3/tracks-v1a1/mono.m3u8",
+
+"euroliga4": "https://ja.periquitopan.store/euroliga4/tracks-v1a1/mono.m3u8",
+"euroliga4_1": "https://ja.periquitopan.store/euroliga4/tracks-v1a1/mono.m3u8",
+"euroliga4_2": "https://ja.periquitopan.store/euroliga4/tracks-v1a1/mono.m3u8",
+"euroliga4_3": "https://ja.periquitopan.store/euroliga4/tracks-v1a1/mono.m3u8",
+
+"euroliga5": "https://ja.periquitopan.store/euroliga5/tracks-v1a1/mono.m3u8",
+"euroliga5_1": "https://ja.periquitopan.store/euroliga5/tracks-v1a1/mono.m3u8",
+"euroliga5_2": "https://ja.periquitopan.store/euroliga5/tracks-v1a1/mono.m3u8",
+"euroliga5_3": "https://ja.periquitopan.store/euroliga5/tracks-v1a1/mono.m3u8",
+
+"tdp": "https://ja.periquitopan.store/tdp/tracks-v1a1/mono.m3u8",
+"tdp_1": "https://ja.periquitopan.store/tdp/tracks-v1a1/mono.m3u8",
+"tdp_2": "https://ja.periquitopan.store/tdp/tracks-v1a1/mono.m3u8",
+"tdp_3": "https://ja.periquitopan.store/tdp/tracks-v1a1/mono.m3u8",
+
+"eurosport": "https://ja.periquitopan.store/eurosport/tracks-v1a1/mono.m3u8",
+"eurosport_1": "https://ja.periquitopan.store/eurosport/tracks-v1a1/mono.m3u8",
+"eurosport_2": "https://ja.periquitopan.store/eurosport/tracks-v1a1/mono.m3u8",
+"eurosport_3": "https://ja.periquitopan.store/eurosport/tracks-v1a1/mono.m3u8",
+
+"eurosport1": "https://ja.periquitopan.store/eurosport/tracks-v1a1/mono.m3u8",
+"eurosport_1": "https://ja.periquitopan.store/eurosport/tracks-v1a1/mono.m3u8",
+"eurosport_2": "https://ja.periquitopan.store/eurosport/tracks-v1a1/mono.m3u8",
+"eurosport_3": "https://ja.periquitopan.store/eurosport/tracks-v1a1/mono.m3u8",
+
+"eurosport2": "https://ja.periquitopan.store/eurosport2/tracks-v1a1/mono.m3u8",
+"eurosport2_1": "https://ja.periquitopan.store/eurosport2/tracks-v1a1/mono.m3u8",
+"eurosport2_2": "https://ja.periquitopan.store/eurosport2/tracks-v1a1/mono.m3u8",
+"eurosport2_3": "https://ja.periquitopan.store/eurosport2/tracks-v1a1/mono.m3u8",
+
+"mdeportes": "https://ja.periquitopan.store/mdeportes/tracks-v1a1/mono.m3u8",
+"mdeportes1": "https://ja.periquitopan.store/mdeportes/tracks-v1a1/mono.m3u8",
+"mdeportes_1": "https://ja.periquitopan.store/mdeportes/tracks-v1a1/mono.m3u8",
+"mdeportes_2": "https://ja.periquitopan.store/mdeportes/tracks-v1a1/mono.m3u8",
+"mdeportes_3": "https://ja.periquitopan.store/mdeportes/tracks-v1a1/mono.m3u8",
+
+"mdeportes2": "https://ja.periquitopan.store/mdeportes2/tracks-v1a1/mono.m3u8",
+"mdeportes2_1": "https://ja.periquitopan.store/mdeportes2/tracks-v1a1/mono.m3u8",
+"mdeportes2_2": "https://ja.periquitopan.store/mdeportes2/tracks-v1a1/mono.m3u8",
+"mdeportes2_3": "https://ja.periquitopan.store/mdeportes2/tracks-v1a1/mono.m3u8",
+
+"mdeportes3": "https://ja.periquitopan.store/mdeportes3/tracks-v1a1/mono.m3u8",
+"mdeportes3_1": "https://ja.periquitopan.store/mdeportes3/tracks-v1a1/mono.m3u8",
+"mdeportes3_2": "https://ja.periquitopan.store/mdeportes3/tracks-v1a1/mono.m3u8",
+"mdeportes3_3": "https://ja.periquitopan.store/mdeportes3/tracks-v1a1/mono.m3u8",
+
+"mdeportes4": "https://ja.periquitopan.store/mdeportes4/tracks-v1a1/mono.m3u8",
+"mdeportes4_1": "https://ja.periquitopan.store/mdeportes4/tracks-v1a1/mono.m3u8",
+"mdeportes4_2": "https://ja.periquitopan.store/mdeportes4/tracks-v1a1/mono.m3u8",
+"mdeportes4_3": "https://ja.periquitopan.store/mdeportes4/tracks-v1a1/mono.m3u8",
+
+"mdeportes5": "https://ja.periquitopan.store/mdeportes5/tracks-v1a1/mono.m3u8",
+"mdeportes5_1": "https://ja.periquitopan.store/mdeportes5/tracks-v1a1/mono.m3u8",
+"mdeportes5_2": "https://ja.periquitopan.store/mdeportes5/tracks-v1a1/mono.m3u8",
+"mdeportes5_3": "https://ja.periquitopan.store/mdeportes5/tracks-v1a1/mono.m3u8",
+
+"mdeportes6": "https://ja.periquitopan.store/mdeportes6/tracks-v1a1/mono.m3u8",
+"mdeportes6_1": "https://ja.periquitopan.store/mdeportes6/tracks-v1a1/mono.m3u8",
+"mdeportes6_2": "https://ja.periquitopan.store/mdeportes6/tracks-v1a1/mono.m3u8",
+"mdeportes6_3": "https://ja.periquitopan.store/mdeportes6/tracks-v1a1/mono.m3u8",
+
+"mvamos": "https://ja.periquitopan.store/mvamos/tracks-v1a1/mono.m3u8",
+"mvamos_1": "https://ja.periquitopan.store/mvamos/tracks-v1a1/mono.m3u8",
+"mvamos_2": "https://ja.periquitopan.store/mvamos/tracks-v1a1/mono.m3u8",
+"mvamos_3": "https://ja.periquitopan.store/mvamos/tracks-v1a1/mono.m3u8",
+
+"mcampeones": "https://ja.periquitopan.store/mcampeones/tracks-v1a1/mono.m3u8",
+"mcampeones_1": "https://ja.periquitopan.store/mcampeones/tracks-v1a1/mono.m3u8",
+"mcampeones_2": "https://ja.periquitopan.store/mcampeones/tracks-v1a1/mono.m3u8",
+"mcampeones_3": "https://ja.periquitopan.store/mcampeones/tracks-v1a1/mono.m3u8",
+
+"mcampeones2": "https://ja.periquitopan.store/mcampeones2/tracks-v1a1/mono.m3u8",
+"mcampeones2_1": "https://ja.periquitopan.store/mcampeones2/tracks-v1a1/mono.m3u8",
+"mcampeones2_2": "https://ja.periquitopan.store/mcampeones2/tracks-v1a1/mono.m3u8",
+"mcampeones2_3": "https://ja.periquitopan.store/mcampeones2/tracks-v1a1/mono.m3u8",
+
+"mcampeones3": "https://ja.periquitopan.store/mcampeones3/tracks-v1a1/mono.m3u8",
+"mcampeones3_1": "https://ja.periquitopan.store/mcampeones3/tracks-v1a1/mono.m3u8",
+"mcampeones3_2": "https://ja.periquitopan.store/mcampeones3/tracks-v1a1/mono.m3u8",
+"mcampeones3_3": "https://ja.periquitopan.store/mcampeones3/tracks-v1a1/mono.m3u8",
+
+"mcampeones4": "https://ja.periquitopan.store/mcampeones4/tracks-v1a1/mono.m3u8",
+"mcampeones4_1": "https://ja.periquitopan.store/mcampeones4/tracks-v1a1/mono.m3u8",
+"mcampeones4_2": "https://ja.periquitopan.store/mcampeones4/tracks-v1a1/mono.m3u8",
+"mcampeones4_3": "https://ja.periquitopan.store/mcampeones4/tracks-v1a1/mono.m3u8",
+
+"mcampeones5": "https://ja.periquitopan.store/mcampeones5/tracks-v1a1/mono.m3u8",
+"mcampeones5_1": "https://ja.periquitopan.store/mcampeones5/tracks-v1a1/mono.m3u8",
+"mcampeones5_2": "https://ja.periquitopan.store/mcampeones5/tracks-v1a1/mono.m3u8",
+"mcampeones5_3": "https://ja.periquitopan.store/mcampeones5/tracks-v1a1/mono.m3u8",
+
+"mcampeones6": "https://ja.periquitopan.store/mcampeones6/tracks-v1a1/mono.m3u8",
+"mcampeones6_1": "https://ja.periquitopan.store/mcampeones6/tracks-v1a1/mono.m3u8",
+"mcampeones6_2": "https://ja.periquitopan.store/mcampeones6/tracks-v1a1/mono.m3u8",
+"mcampeones6_3": "https://ja.periquitopan.store/mcampeones6/tracks-v1a1/mono.m3u8",
+
+"mcampeones7": "https://ja.periquitopan.store/mcampeones7/tracks-v1a1/mono.m3u8",
+"mcampeones7_1": "https://ja.periquitopan.store/mcampeones7/tracks-v1a1/mono.m3u8",
+"mcampeones7_2": "https://ja.periquitopan.store/mcampeones7/tracks-v1a1/mono.m3u8",
+"mcampeones7_3": "https://ja.periquitopan.store/mcampeones7/tracks-v1a1/mono.m3u8",
+
+"mcampeones8": "https://ja.periquitopan.store/mcampeones8/tracks-v1a1/mono.m3u8",
+"mcampeones8_1": "https://ja.periquitopan.store/mcampeones8/tracks-v1a1/mono.m3u8",
+"mcampeones8_2": "https://ja.periquitopan.store/mcampeones8/tracks-v1a1/mono.m3u8",
+"mcampeones8_3": "https://ja.periquitopan.store/mcampeones8/tracks-v1a1/mono.m3u8",
+
+"mcampeones9": "https://ja.periquitopan.store/mcampeones9/tracks-v1a1/mono.m3u8",
+"mcampeones9_1": "https://ja.periquitopan.store/mcampeones9/tracks-v1a1/mono.m3u8",
+"mcampeones9_2": "https://ja.periquitopan.store/mcampeones9/tracks-v1a1/mono.m3u8",
+"mcampeones9_3": "https://ja.periquitopan.store/mcampeones9/tracks-v1a1/mono.m3u8",
+
+"mcampeones10": "https://ja.periquitopan.store/mcampeones10/tracks-v1a1/mono.m3u8",
+"mcampeones10_1": "https://ja.periquitopan.store/mcampeones10/tracks-v1a1/mono.m3u8",
+"mcampeones10_2": "https://ja.periquitopan.store/mcampeones10/tracks-v1a1/mono.m3u8",
+"mcampeones10_3": "https://ja.periquitopan.store/mcampeones10/tracks-v1a1/mono.m3u8",
+
+"nba1": "https://ja.periquitopan.store/nba1/tracks-v1a1/mono.m3u8",
+"nba1_1": "https://ja.periquitopan.store/nba1/tracks-v1a1/mono.m3u8",
+"nba1_2": "https://ja.periquitopan.store/nba1/tracks-v1a1/mono.m3u8",
+"nba1_3": "https://ja.periquitopan.store/nba1/tracks-v1a1/mono.m3u8",
+
+"nba2": "https://ja.periquitopan.store/nba2/tracks-v1a1/mono.m3u8",
+"nba2_1": "https://ja.periquitopan.store/nba2/tracks-v1a1/mono.m3u8",
+"nba2_2": "https://ja.periquitopan.store/nba2/tracks-v1a1/mono.m3u8",
+"nba2_3": "https://ja.periquitopan.store/nba2/tracks-v1a1/mono.m3u8",
+
+"nba3": "https://ja.periquitopan.store/nba3/tracks-v1a1/mono.m3u8",
+"nba3_1": "https://ja.periquitopan.store/nba3/tracks-v1a1/mono.m3u8",
+"nba3_2": "https://ja.periquitopan.store/nba3/tracks-v1a1/mono.m3u8",
+"nba3_3": "https://ja.periquitopan.store/nba3/tracks-v1a1/mono.m3u8",
+
+"nba4": "https://ja.periquitopan.store/nba4/tracks-v1a1/mono.m3u8",
+"nba4_1": "https://ja.periquitopan.store/nba4/tracks-v1a1/mono.m3u8",
+"nba4_2": "https://ja.periquitopan.store/nba4/tracks-v1a1/mono.m3u8",
+"nba4_3": "https://ja.periquitopan.store/nba4/tracks-v1a1/mono.m3u8",
+
+"nba5": "https://ja.periquitopan.store/nba5/tracks-v1a1/mono.m3u8",
+"nba5_1": "https://ja.periquitopan.store/nba5/tracks-v1a1/mono.m3u8",
+"nba5_2": "https://ja.periquitopan.store/nba5/tracks-v1a1/mono.m3u8",
+"nba5_3": "https://ja.periquitopan.store/nba5/tracks-v1a1/mono.m3u8",
+
+"nba6": "https://ja.periquitopan.store/nba6/tracks-v1a1/mono.m3u8",
+"nba6_1": "https://ja.periquitopan.store/nba6/tracks-v1a1/mono.m3u8",
+"nba6_2": "https://ja.periquitopan.store/nba6/tracks-v1a1/mono.m3u8",
+"nba6_3": "https://ja.periquitopan.store/nba6/tracks-v1a1/mono.m3u8",
+
+"nba7": "https://ja.periquitopan.store/nba7/tracks-v1a1/mono.m3u8",
+"nba7_1": "https://ja.periquitopan.store/nba7/tracks-v1a1/mono.m3u8",
+"nba7_2": "https://ja.periquitopan.store/nba7/tracks-v1a1/mono.m3u8",
+"nba7_3": "https://ja.periquitopan.store/nba7/tracks-v1a1/mono.m3u8",
+
+"nba8": "https://ja.periquitopan.store/nba8/tracks-v1a1/mono.m3u8",
+"nba8_1": "https://ja.periquitopan.store/nba8/tracks-v1a1/mono.m3u8",
+"nba8_2": "https://ja.periquitopan.store/nba8/tracks-v1a1/mono.m3u8",
+"nba8_3": "https://ja.periquitopan.store/nba8/tracks-v1a1/mono.m3u8",
+
+"nba9": "https://ja.periquitopan.store/nba9/tracks-v1a1/mono.m3u8",
+"nba9_1": "https://ja.periquitopan.store/nba9/tracks-v1a1/mono.m3u8",
+"nba9_2": "https://ja.periquitopan.store/nba9/tracks-v1a1/mono.m3u8",
+"nba9_3": "https://ja.periquitopan.store/nba9/tracks-v1a1/mono.m3u8",
+
+"nba10": "https://ja.periquitopan.store/nba10/tracks-v1a1/mono.m3u8",
+"nba10_1": "https://ja.periquitopan.store/nba10/tracks-v1a1/mono.m3u8",
+"nba10_2": "https://ja.periquitopan.store/nba10/tracks-v1a1/mono.m3u8",
+"nba10_3": "https://ja.periquitopan.store/nba10/tracks-v1a1/mono.m3u8",
+
+"nba11": "https://ja.periquitopan.store/nba11/tracks-v1a1/mono.m3u8",
+"nba11_1": "https://ja.periquitopan.store/nba11/tracks-v1a1/mono.m3u8",
+"nba11_2": "https://ja.periquitopan.store/nba11/tracks-v1a1/mono.m3u8",
+"nba11_3": "https://ja.periquitopan.store/nba11/tracks-v1a1/mono.m3u8",
+
+"nba12": "https://ja.periquitopan.store/nba12/tracks-v1a1/mono.m3u8",
+"nba12_1": "https://ja.periquitopan.store/nba12/tracks-v1a1/mono.m3u8",
+"nba12_2": "https://ja.periquitopan.store/nba12/tracks-v1a1/mono.m3u8",
+"nba12_3": "https://ja.periquitopan.store/nba12/tracks-v1a1/mono.m3u8",
+
+"skybundes1": "https://ja.periquitopan.store/skybundes1/tracks-v1a1/mono.m3u8",
+"skybundes1_1": "https://ja.periquitopan.store/skybundes1/tracks-v1a1/mono.m3u8",
+"skybundes1_2": "https://ja.periquitopan.store/skybundes1/tracks-v1a1/mono.m3u8",
+"skybundes1_3": "https://ja.periquitopan.store/skybundes1/tracks-v1a1/mono.m3u8",
+
+"skybundes2": "https://ja.periquitopan.store/skybundes2/tracks-v1a1/mono.m3u8",
+"skybundes2_1": "https://ja.periquitopan.store/skybundes2/tracks-v1a1/mono.m3u8",
+"skybundes2_2": "https://ja.periquitopan.store/skybundes2/tracks-v1a1/mono.m3u8",
+"skybundes2_3": "https://ja.periquitopan.store/skybundes2/tracks-v1a1/mono.m3u8",
+
+"skybundes3": "https://ja.periquitopan.store/skybundes3/tracks-v1a1/mono.m3u8",
+"skybundes3_1": "https://ja.periquitopan.store/skybundes3/tracks-v1a1/mono.m3u8",
+"skybundes3_2": "https://ja.periquitopan.store/skybundes3/tracks-v1a1/mono.m3u8",
+"skybundes3_3": "https://ja.periquitopan.store/skybundes3/tracks-v1a1/mono.m3u8",
+
+"skybundes4": "https://ja.periquitopan.store/skybundes4/tracks-v1a1/mono.m3u8",
+"skybundes4_1": "https://ja.periquitopan.store/skybundes4/tracks-v1a1/mono.m3u8",
+"skybundes4_2": "https://ja.periquitopan.store/skybundes4/tracks-v1a1/mono.m3u8",
+"skybundes4_3": "https://ja.periquitopan.store/skybundes4/tracks-v1a1/mono.m3u8",
+
+"skybundes5": "https://ja.periquitopan.store/skybundes5/tracks-v1a1/mono.m3u8",
+"skybundes5_1": "https://ja.periquitopan.store/skybundes5/tracks-v1a1/mono.m3u8",
+"skybundes5_2": "https://ja.periquitopan.store/skybundes5/tracks-v1a1/mono.m3u8",
+"skybundes5_3": "https://ja.periquitopan.store/skybundes5/tracks-v1a1/mono.m3u8",
+
+"disney1": "https://ja.periquitopan.store/disney1/tracks-v1a1/mono.m3u8",
+"disney1_1": "https://ja.periquitopan.store/disney1/tracks-v1a1/mono.m3u8",
+"disney1_2": "https://ja.periquitopan.store/disney1/tracks-v1a1/mono.m3u8",
+"disney1_3": "https://ja.periquitopan.store/disney1/tracks-v1a1/mono.m3u8",
+
+"disney2": "https://ja.periquitopan.store/disney2/tracks-v1a1/mono.m3u8",
+"disney2_1": "https://ja.periquitopan.store/disney2/tracks-v1a1/mono.m3u8",
+"disney2_2": "https://ja.periquitopan.store/disney2/tracks-v1a1/mono.m3u8",
+"disney2_3": "https://ja.periquitopan.store/disney2/tracks-v1a1/mono.m3u8",
+
+"disney3": "https://ja.periquitopan.store/disney3/tracks-v1a1/mono.m3u8",
+"disney3_1": "https://ja.periquitopan.store/disney3/tracks-v1a1/mono.m3u8",
+"disney3_2": "https://ja.periquitopan.store/disney3/tracks-v1a1/mono.m3u8",
+"disney3_3": "https://ja.periquitopan.store/disney3/tracks-v1a1/mono.m3u8",
+
+"disney4": "https://ja.periquitopan.store/disney4/tracks-v1a1/mono.m3u8",
+"disney4_1": "https://ja.periquitopan.store/disney4/tracks-v1a1/mono.m3u8",
+"disney4_2": "https://ja.periquitopan.store/disney4/tracks-v1a1/mono.m3u8",
+"disney4_3": "https://ja.periquitopan.store/disney4/tracks-v1a1/mono.m3u8",
+
+"disney5": "https://ja.periquitopan.store/disney5/tracks-v1a1/mono.m3u8",
+"disney5_1": "https://ja.periquitopan.store/disney5/tracks-v1a1/mono.m3u8",
+"disney5_2": "https://ja.periquitopan.store/disney5/tracks-v1a1/mono.m3u8",
+"disney5_3": "https://ja.periquitopan.store/disney5/tracks-v1a1/mono.m3u8",
+
+"disney6": "https://ja.periquitopan.store/disney6/tracks-v1a1/mono.m3u8",
+"disney6_1": "https://ja.periquitopan.store/disney6/tracks-v1a1/mono.m3u8",
+"disney6_2": "https://ja.periquitopan.store/disney6/tracks-v1a1/mono.m3u8",
+"disney6_3": "https://ja.periquitopan.store/disney6/tracks-v1a1/mono.m3u8",
+
+"disney7": "https://ja.periquitopan.store/disney7/tracks-v1a1/mono.m3u8",
+"disney7_1": "https://ja.periquitopan.store/disney7/tracks-v1a1/mono.m3u8",
+"disney7_2": "https://ja.periquitopan.store/disney7/tracks-v1a1/mono.m3u8",
+"disney7_3": "https://ja.periquitopan.store/disney7/tracks-v1a1/mono.m3u8",
+
+"disney8": "https://ja.periquitopan.store/disney8/tracks-v1a1/mono.m3u8",
+"disney8_1": "https://ja.periquitopan.store/disney8/tracks-v1a1/mono.m3u8",
+"disney8_2": "https://ja.periquitopan.store/disney8/tracks-v1a1/mono.m3u8",
+"disney8_3": "https://ja.periquitopan.store/disney8/tracks-v1a1/mono.m3u8",
+
+"disney9": "https://ja.periquitopan.store/disney9/tracks-v1a1/mono.m3u8",
+"disney9_1": "https://ja.periquitopan.store/disney9/tracks-v1a1/mono.m3u8",
+"disney9_2": "https://ja.periquitopan.store/disney9/tracks-v1a1/mono.m3u8",
+"disney9_3": "https://ja.periquitopan.store/disney9/tracks-v1a1/mono.m3u8",
+
+"disney10": "https://ja.periquitopan.store/disney10/tracks-v1a1/mono.m3u8",
+"disney10_1": "https://ja.periquitopan.store/disney10/tracks-v1a1/mono.m3u8",
+"disney10_2": "https://ja.periquitopan.store/disney10/tracks-v1a1/mono.m3u8",
+"disney10_3": "https://ja.periquitopan.store/disney10/tracks-v1a1/mono.m3u8",
+
+"disney11": "https://ja.periquitopan.store/disney11/tracks-v1a1/mono.m3u8",
+"disney11_1": "https://ja.periquitopan.store/disney11/tracks-v1a1/mono.m3u8",
+"disney11_2": "https://ja.periquitopan.store/disney11/tracks-v1a1/mono.m3u8",
+"disney11_3": "https://ja.periquitopan.store/disney11/tracks-v1a1/mono.m3u8",
+
+"disney12": "https://ja.periquitopan.store/disney12/tracks-v1a1/mono.m3u8",
+"disney12_1": "https://ja.periquitopan.store/disney12/tracks-v1a1/mono.m3u8",
+"disney12_2": "https://ja.periquitopan.store/disney12/tracks-v1a1/mono.m3u8",
+"disney12_3": "https://ja.periquitopan.store/disney12/tracks-v1a1/mono.m3u8",
+
+"disney13": "https://ja.periquitopan.store/disney13/tracks-v1a1/mono.m3u8",
+"disney13_1": "https://ja.periquitopan.store/disney13/tracks-v1a1/mono.m3u8",
+"disney13_2": "https://ja.periquitopan.store/disney13/tracks-v1a1/mono.m3u8",
+"disney13_3": "https://ja.periquitopan.store/disney13/tracks-v1a1/mono.m3u8",
+
+"disney14": "https://ja.periquitopan.store/disney14/tracks-v1a1/mono.m3u8",
+"disney14_1": "https://ja.periquitopan.store/disney14/tracks-v1a1/mono.m3u8",
+"disney14_2": "https://ja.periquitopan.store/disney14/tracks-v1a1/mono.m3u8",
+"disney14_3": "https://ja.periquitopan.store/disney14/tracks-v1a1/mono.m3u8",
+
+"disney15": "https://ja.periquitopan.store/disney15/tracks-v1a1/mono.m3u8",
+"disney15_1": "https://ja.periquitopan.store/disney15/tracks-v1a1/mono.m3u8",
+"disney15_2": "https://ja.periquitopan.store/disney15/tracks-v1a1/mono.m3u8",
+"disney15_3": "https://ja.periquitopan.store/disney15/tracks-v1a1/mono.m3u8",
+
+"disney16": "https://ja.periquitopan.store/disney16/tracks-v1a1/mono.m3u8",
+"disney16_1": "https://ja.periquitopan.store/disney16/tracks-v1a1/mono.m3u8",
+"disney16_2": "https://ja.periquitopan.store/disney16/tracks-v1a1/mono.m3u8",
+"disney16_3": "https://ja.periquitopan.store/disney16/tracks-v1a1/mono.m3u8",
+
+"disney17": "https://ja.periquitopan.store/disney17/tracks-v1a1/mono.m3u8",
+"disney17_1": "https://ja.periquitopan.store/disney17/tracks-v1a1/mono.m3u8",
+"disney17_2": "https://ja.periquitopan.store/disney17/tracks-v1a1/mono.m3u8",
+"disney17_3": "https://ja.periquitopan.store/disney17/tracks-v1a1/mono.m3u8",
+
+"disney18": "https://ja.periquitopan.store/disney18/tracks-v1a1/mono.m3u8",
+"disney18_1": "https://ja.periquitopan.store/disney18/tracks-v1a1/mono.m3u8",
+"disney18_2": "https://ja.periquitopan.store/disney18/tracks-v1a1/mono.m3u8",
+"disney18_3": "https://ja.periquitopan.store/disney18/tracks-v1a1/mono.m3u8",
+
+"disney19": "https://ja.periquitopan.store/disney19/tracks-v1a1/mono.m3u8",
+"disney19_1": "https://ja.periquitopan.store/disney19/tracks-v1a1/mono.m3u8",
+"disney19_2": "https://ja.periquitopan.store/disney19/tracks-v1a1/mono.m3u8",
+"disney19_3": "https://ja.periquitopan.store/disney19/tracks-v1a1/mono.m3u8",
+
+"disney20": "https://ja.periquitopan.store/disney20/tracks-v1a1/mono.m3u8",
+"disney20_1": "https://ja.periquitopan.store/disney20/tracks-v1a1/mono.m3u8",
+"disney20_2": "https://ja.periquitopan.store/disney20/tracks-v1a1/mono.m3u8",
+"disney20_3": "https://ja.periquitopan.store/disney20/tracks-v1a1/mono.m3u8",
+
+"disney21": "https://ja.periquitopan.store/disney21/tracks-v1a1/mono.m3u8",
+"disney21_1": "https://ja.periquitopan.store/disney21/tracks-v1a1/mono.m3u8",
+"disney21_2": "https://ja.periquitopan.store/disney21/tracks-v1a1/mono.m3u8",
+"disney21_3": "https://ja.periquitopan.store/disney21/tracks-v1a1/mono.m3u8",
+
+"disney22": "https://ja.periquitopan.store/disney22/tracks-v1a1/mono.m3u8",
+"disney22_1": "https://ja.periquitopan.store/disney22/tracks-v1a1/mono.m3u8",
+"disney22_2": "https://ja.periquitopan.store/disney22/tracks-v1a1/mono.m3u8",
+"disney22_3": "https://ja.periquitopan.store/disney22/tracks-v1a1/mono.m3u8",
+
+"disney23": "https://ja.periquitopan.store/disney23/tracks-v1a1/mono.m3u8",
+"disney23_1": "https://ja.periquitopan.store/disney23/tracks-v1a1/mono.m3u8",
+"disney23_2": "https://ja.periquitopan.store/disney23/tracks-v1a1/mono.m3u8",
+"disney23_3": "https://ja.periquitopan.store/disney23/tracks-v1a1/mono.m3u8",
+
+"disney24": "https://ja.periquitopan.store/disney24/tracks-v1a1/mono.m3u8",
+"disney24_1": "https://ja.periquitopan.store/disney24/tracks-v1a1/mono.m3u8",
+"disney24_2": "https://ja.periquitopan.store/disney24/tracks-v1a1/mono.m3u8",
+"disney24_3": "https://ja.periquitopan.store/disney24/tracks-v1a1/mono.m3u8",
+
+"disney25": "https://ja.periquitopan.store/disney25/tracks-v1a1/mono.m3u8",
+"disney25_1": "https://ja.periquitopan.store/disney25/tracks-v1a1/mono.m3u8",
+"disney25_2": "https://ja.periquitopan.store/disney25/tracks-v1a1/mono.m3u8",
+"disney25_3": "https://ja.periquitopan.store/disney25/tracks-v1a1/mono.m3u8",
+
+"max1": "https://ja.periquitopan.store/max1/tracks-v1a1/mono.m3u8",
+"max1_1": "https://ja.periquitopan.store/max1/tracks-v1a1/mono.m3u8",
+"max1_2": "https://ja.periquitopan.store/max1/tracks-v1a1/mono.m3u8",
+"max1_3": "https://ja.periquitopan.store/max1/tracks-v1a1/mono.m3u8",
+
+"max2": "https://ja.periquitopan.store/max2/tracks-v1a1/mono.m3u8",
+"max2_1": "https://ja.periquitopan.store/max2/tracks-v1a1/mono.m3u8",
+"max2_2": "https://ja.periquitopan.store/max2/tracks-v1a1/mono.m3u8",
+"max2_3": "https://ja.periquitopan.store/max2/tracks-v1a1/mono.m3u8",
+
+"max3": "https://ja.periquitopan.store/max3/tracks-v1a1/mono.m3u8",
+"max3_1": "https://ja.periquitopan.store/max3/tracks-v1a1/mono.m3u8",
+"max3_2": "https://ja.periquitopan.store/max3/tracks-v1a1/mono.m3u8",
+"max3_3": "https://ja.periquitopan.store/max3/tracks-v1a1/mono.m3u8",
+
+"max4": "https://ja.periquitopan.store/max4/tracks-v1a1/mono.m3u8",
+"max4_1": "https://ja.periquitopan.store/max4/tracks-v1a1/mono.m3u8",
+"max4_2": "https://ja.periquitopan.store/max4/tracks-v1a1/mono.m3u8",
+"max4_3": "https://ja.periquitopan.store/max4/tracks-v1a1/mono.m3u8",
+
+"max5": "https://ja.periquitopan.store/max5/tracks-v1a1/mono.m3u8",
+"max5_1": "https://ja.periquitopan.store/max5/tracks-v1a1/mono.m3u8",
+"max5_2": "https://ja.periquitopan.store/max5/tracks-v1a1/mono.m3u8",
+"max5_3": "https://ja.periquitopan.store/max5/tracks-v1a1/mono.m3u8",
+
+"max6": "https://ja.periquitopan.store/max6/tracks-v1a1/mono.m3u8",
+"max6_1": "https://ja.periquitopan.store/max6/tracks-v1a1/mono.m3u8",
+"max6_2": "https://ja.periquitopan.store/max6/tracks-v1a1/mono.m3u8",
+"max6_3": "https://ja.periquitopan.store/max6/tracks-v1a1/mono.m3u8",
+
+"max7": "https://ja.periquitopan.store/max7/tracks-v1a1/mono.m3u8",
+"max7_1": "https://ja.periquitopan.store/max7/tracks-v1a1/mono.m3u8",
+"max7_2": "https://ja.periquitopan.store/max7/tracks-v1a1/mono.m3u8",
+"max7_3": "https://ja.periquitopan.store/max7/tracks-v1a1/mono.m3u8",
+
+"max8": "https://ja.periquitopan.store/max8/tracks-v1a1/mono.m3u8",
+"max8_1": "https://ja.periquitopan.store/max8/tracks-v1a1/mono.m3u8",
+"max8_2": "https://ja.periquitopan.store/max8/tracks-v1a1/mono.m3u8",
+"max8_3": "https://ja.periquitopan.store/max8/tracks-v1a1/mono.m3u8",
+
+"max9": "https://ja.periquitopan.store/max9/tracks-v1a1/mono.m3u8",
+"max9_1": "https://ja.periquitopan.store/max9/tracks-v1a1/mono.m3u8",
+"max9_2": "https://ja.periquitopan.store/max9/tracks-v1a1/mono.m3u8",
+"max9_3": "https://ja.periquitopan.store/max9/tracks-v1a1/mono.m3u8",
+
+"max10": "https://ja.periquitopan.store/max10/tracks-v1a1/mono.m3u8",
+"max10_1": "https://ja.periquitopan.store/max10/tracks-v1a1/mono.m3u8",
+"max10_2": "https://ja.periquitopan.store/max10/tracks-v1a1/mono.m3u8",
+"max10_3": "https://ja.periquitopan.store/max10/tracks-v1a1/mono.m3u8",
+
+"entel1": "https://ja.periquitopan.store/entel1/tracks-v1a1/mono.m3u8",
+"entel1_1": "https://ja.periquitopan.store/entel1/tracks-v1a1/mono.m3u8",
+"entel1_2": "https://ja.periquitopan.store/entel1/tracks-v1a1/mono.m3u8",
+"entel1_3": "https://ja.periquitopan.store/entel1/tracks-v1a1/mono.m3u8",
+
+"entel58": "https://ja.periquitopan.store/entel58/tracks-v1a1/mono.m3u8",
+"entel58_1": "https://ja.periquitopan.store/entel58/tracks-v1a1/mono.m3u8",
+"entel58_2": "https://ja.periquitopan.store/entel58/tracks-v1a1/mono.m3u8",
+"entel58_3": "https://ja.periquitopan.store/entel58/tracks-v1a1/mono.m3u8",
+
+"entel59": "https://ja.periquitopan.store/entel59/tracks-v1a1/mono.m3u8",
+"entel59_1": "https://ja.periquitopan.store/entel59/tracks-v1a1/mono.m3u8",
+"entel59_2": "https://ja.periquitopan.store/entel59/tracks-v1a1/mono.m3u8",
+"entel59_3": "https://ja.periquitopan.store/entel59/tracks-v1a1/mono.m3u8",
+
+"tigopy": "https://ja.periquitopan.store/tigopy/tracks-v1a1/mono.m3u8",
+"tigopy_1": "https://ja.periquitopan.store/tigopy/tracks-v1a1/mono.m3u8",
+"tigopy_2": "https://ja.periquitopan.store/tigopy/tracks-v1a1/mono.m3u8",
+"tigopy_3": "https://ja.periquitopan.store/tigopy/tracks-v1a1/mono.m3u8",
+
+"tigopy2": "https://ja.periquitopan.store/tigopy2/tracks-v1a1/mono.m3u8",
+"tigopy2_1": "https://ja.periquitopan.store/tigopy2/tracks-v1a1/mono.m3u8",
+"tigopy2_2": "https://ja.periquitopan.store/tigopy2/tracks-v1a1/mono.m3u8",
+"tigopy2_3": "https://ja.periquitopan.store/tigopy2/tracks-v1a1/mono.m3u8",
+
+"tigopy3": "https://ja.periquitopan.store/tigopy3/tracks-v1a1/mono.m3u8",
+"tigopy3_1": "https://ja.periquitopan.store/tigopy3/tracks-v1a1/mono.m3u8",
+"tigopy3_2": "https://ja.periquitopan.store/tigopy3/tracks-v1a1/mono.m3u8",
+"tigopy3_3": "https://ja.periquitopan.store/tigopy3/tracks-v1a1/mono.m3u8",
+
+"tigogt": "https://ja.periquitopan.store/tigogt/tracks-v1a1/mono.m3u8",
+"tigogt_1": "https://ja.periquitopan.store/tigogt/tracks-v1a1/mono.m3u8",
+"tigogt_2": "https://ja.periquitopan.store/tigogt/tracks-v1a1/mono.m3u8",
+"tigogt_3": "https://ja.periquitopan.store/tigogt/tracks-v1a1/mono.m3u8",
+
+"clarogt": "https://ja.periquitopan.store/clarogt/tracks-v1a1/mono.m3u8",
+"clarogt_1": "https://ja.periquitopan.store/clarogt/tracks-v1a1/mono.m3u8",
+"clarogt_2": "https://ja.periquitopan.store/clarogt/tracks-v1a1/mono.m3u8",
+"clarogt_3": "https://ja.periquitopan.store/clarogt/tracks-v1a1/mono.m3u8",
+
+"tigocr": "https://ja.periquitopan.store/tigocr/tracks-v1a1/mono.m3u8",
+"tigocr_1": "https://ja.periquitopan.store/tigocr/tracks-v1a1/mono.m3u8",
+"tigocr_2": "https://ja.periquitopan.store/tigocr/tracks-v1a1/mono.m3u8",
+"tigocr_3": "https://ja.periquitopan.store/tigocr/tracks-v1a1/mono.m3u8",
+
+"goltv": "https://ja.periquitopan.store/goltv/tracks-v1a1/mono.m3u8",
+"goltv_1": "https://ja.periquitopan.store/goltv/tracks-v1a1/mono.m3u8",
+"goltv_2": "https://ja.periquitopan.store/goltv/tracks-v1a1/mono.m3u8",
+"goltv_3": "https://ja.periquitopan.store/goltv/tracks-v1a1/mono.m3u8",
+
+"vtvplus": "https://ja.periquitopan.store/vtvplus/tracks-v1a1/mono.m3u8",
+"vtvplus_1": "https://ja.periquitopan.store/vtvplus/tracks-v1a1/mono.m3u8",
+"vtvplus_2": "https://ja.periquitopan.store/vtvplus/tracks-v1a1/mono.m3u8",
+"vtvplus_3": "https://ja.periquitopan.store/vtvplus/tracks-v1a1/mono.m3u8",
+
+"calientetv": "https://ja.periquitopan.store/calientetv/tracks-v1a1/mono.m3u8",
+"calientetv_1": "https://ja.periquitopan.store/calientetv/tracks-v1a1/mono.m3u8",
+"calientetv_2": "https://ja.periquitopan.store/calientetv/tracks-v1a1/mono.m3u8",
+"calientetv_3": "https://ja.periquitopan.store/calientetv/tracks-v1a1/mono.m3u8",
+
+"calientetv1": "https://ja.periquitopan.store/calientetv1/tracks-v1a1/mono.m3u8",
+"calientetv1_1": "https://ja.periquitopan.store/calientetv1/tracks-v1a1/mono.m3u8",
+"calientetv1_2": "https://ja.periquitopan.store/calientetv1/tracks-v1a1/mono.m3u8",
+"calientetv1_3": "https://ja.periquitopan.store/calientetv1/tracks-v1a1/mono.m3u8",
+
+"calientetv2": "https://ja.periquitopan.store/calientetv2/tracks-v1a1/mono.m3u8",
+"calientetv2_1": "https://ja.periquitopan.store/calientetv2/tracks-v1a1/mono.m3u8",
+"calientetv2_2": "https://ja.periquitopan.store/calientetv2/tracks-v1a1/mono.m3u8",
+"calientetv2_3": "https://ja.periquitopan.store/calientetv2/tracks-v1a1/mono.m3u8",
+
+"calientetv3": "https://ja.periquitopan.store/calientetv3/tracks-v1a1/mono.m3u8",
+"calientetv3_1": "https://ja.periquitopan.store/calientetv3/tracks-v1a1/mono.m3u8",
+"calientetv3_2": "https://ja.periquitopan.store/calientetv3/tracks-v1a1/mono.m3u8",
+"calientetv3_3": "https://ja.periquitopan.store/calientetv3/tracks-v1a1/mono.m3u8",
+
+"calientetv4": "https://ja.periquitopan.store/calientetv4/tracks-v1a1/mono.m3u8",
+"calientetv4_1": "https://ja.periquitopan.store/calientetv4/tracks-v1a1/mono.m3u8",
+"calientetv4_2": "https://ja.periquitopan.store/calientetv4/tracks-v1a1/mono.m3u8",
+"calientetv4_3": "https://ja.periquitopan.store/calientetv4/tracks-v1a1/mono.m3u8",
+
+"calientetv5": "https://ja.periquitopan.store/calientetv5/tracks-v1a1/mono.m3u8",
+"calientetv5_1": "https://ja.periquitopan.store/calientetv5/tracks-v1a1/mono.m3u8",
+"calientetv5_2": "https://ja.periquitopan.store/calientetv5/tracks-v1a1/mono.m3u8",
+"calientetv5_3": "https://ja.periquitopan.store/calientetv5/tracks-v1a1/mono.m3u8",
+
+"calientetv6": "https://ja.periquitopan.store/calientetv6/tracks-v1a1/mono.m3u8",
+"calientetv6_1": "https://ja.periquitopan.store/calientetv6/tracks-v1a1/mono.m3u8",
+"calientetv6_2": "https://ja.periquitopan.store/calientetv6/tracks-v1a1/mono.m3u8",
+"calientetv6_3": "https://ja.periquitopan.store/calientetv6/tracks-v1a1/mono.m3u8",
+
+"calientetv7": "https://ja.periquitopan.store/calientetv7/tracks-v1a1/mono.m3u8",
+"calientetv7_1": "https://ja.periquitopan.store/calientetv7/tracks-v1a1/mono.m3u8",
+"calientetv7_2": "https://ja.periquitopan.store/calientetv7/tracks-v1a1/mono.m3u8",
+"calientetv7_3": "https://ja.periquitopan.store/calientetv7/tracks-v1a1/mono.m3u8",
+
+"calientetv8": "https://ja.periquitopan.store/calientetv8/tracks-v1a1/mono.m3u8",
+"calientetv8_1": "https://ja.periquitopan.store/calientetv8/tracks-v1a1/mono.m3u8",
+"calientetv8_2": "https://ja.periquitopan.store/calientetv8/tracks-v1a1/mono.m3u8",
+"calientetv8_3": "https://ja.periquitopan.store/calientetv8/tracks-v1a1/mono.m3u8",
+
+"calientetv9": "https://ja.periquitopan.store/calientetv9/tracks-v1a1/mono.m3u8",
+"calientetv9_1": "https://ja.periquitopan.store/calientetv9/tracks-v1a1/mono.m3u8",
+"calientetv9_2": "https://ja.periquitopan.store/calientetv9/tracks-v1a1/mono.m3u8",
+"calientetv9_3": "https://ja.periquitopan.store/calientetv9/tracks-v1a1/mono.m3u8",
+
+"calientetv10": "https://ja.periquitopan.store/calientetv10/tracks-v1a1/mono.m3u8",
+"calientetv10_1": "https://ja.periquitopan.store/calientetv10/tracks-v1a1/mono.m3u8",
+"calientetv10_2": "https://ja.periquitopan.store/calientetv10/tracks-v1a1/mono.m3u8",
+"calientetv10_3": "https://ja.periquitopan.store/calientetv10/tracks-v1a1/mono.m3u8",
+
+"calientetv11": "https://ja.periquitopan.store/calientetv11/tracks-v1a1/mono.m3u8",  
+"calientetv11_1": "https://ja.periquitopan.store/calientetv11/tracks-v1a1/mono.m3u8",  
+"calientetv11_2": "https://ja.periquitopan.store/calientetv11/tracks-v1a1/mono.m3u8",  
+"calientetv11_3": "https://ja.periquitopan.store/calientetv11/tracks-v1a1/mono.m3u8",  
+
+"calientetv12": "https://ja.periquitopan.store/calientetv12/tracks-v1a1/mono.m3u8",  
+"calientetv12_1": "https://ja.periquitopan.store/calientetv12/tracks-v1a1/mono.m3u8",  
+"calientetv12_2": "https://ja.periquitopan.store/calientetv12/tracks-v1a1/mono.m3u8",  
+"calientetv12_3": "https://ja.periquitopan.store/calientetv12/tracks-v1a1/mono.m3u8",  
+
+"calientetv13": "https://ja.periquitopan.store/calientetv13/tracks-v1a1/mono.m3u8",  
+"calientetv13_1": "https://ja.periquitopan.store/calientetv13/tracks-v1a1/mono.m3u8",  
+"calientetv13_2": "https://ja.periquitopan.store/calientetv13/tracks-v1a1/mono.m3u8",  
+"calientetv13_3": "https://ja.periquitopan.store/calientetv13/tracks-v1a1/mono.m3u8",  
+
+"calientetv14": "https://ja.periquitopan.store/calientetv14/tracks-v1a1/mono.m3u8",  
+"calientetv14_1": "https://ja.periquitopan.store/calientetv14/tracks-v1a1/mono.m3u8",  
+"calientetv14_2": "https://ja.periquitopan.store/calientetv14/tracks-v1a1/mono.m3u8",  
+"calientetv14_3": "https://ja.periquitopan.store/calientetv14/tracks-v1a1/mono.m3u8",  
+
+"calientetv15": "https://ja.periquitopan.store/calientetv15/tracks-v1a1/mono.m3u8",  
+"calientetv15_1": "https://ja.periquitopan.store/calientetv15/tracks-v1a1/mono.m3u8",  
+"calientetv15_2": "https://ja.periquitopan.store/calientetv15/tracks-v1a1/mono.m3u8",  
+"calientetv15_3": "https://ja.periquitopan.store/calientetv15/tracks-v1a1/mono.m3u8",  
+
+"calientetv16": "https://ja.periquitopan.store/calientetv16/tracks-v1a1/mono.m3u8",  
+"calientetv16_1": "https://ja.periquitopan.store/calientetv16/tracks-v1a1/mono.m3u8",  
+"calientetv16_2": "https://ja.periquitopan.store/calientetv16/tracks-v1a1/mono.m3u8",  
+"calientetv16_3": "https://ja.periquitopan.store/calientetv16/tracks-v1a1/mono.m3u8",  
+
+"calientetv17": "https://ja.periquitopan.store/calientetv17/tracks-v1a1/mono.m3u8",  
+"calientetv17_1": "https://ja.periquitopan.store/calientetv17/tracks-v1a1/mono.m3u8",  
+"calientetv17_2": "https://ja.periquitopan.store/calientetv17/tracks-v1a1/mono.m3u8",  
+"calientetv17_3": "https://ja.periquitopan.store/calientetv17/tracks-v1a1/mono.m3u8",  
+
+"calientetv18": "https://ja.periquitopan.store/calientetv18/tracks-v1a1/mono.m3u8",  
+"calientetv18_1": "https://ja.periquitopan.store/calientetv18/tracks-v1a1/mono.m3u8",  
+"calientetv18_2": "https://ja.periquitopan.store/calientetv18/tracks-v1a1/mono.m3u8",  
+"calientetv18_3": "https://ja.periquitopan.store/calientetv18/tracks-v1a1/mono.m3u8",  
+
+"calientetv19": "https://ja.periquitopan.store/calientetv19/tracks-v1a1/mono.m3u8",  
+"calientetv19_1": "https://ja.periquitopan.store/calientetv19/tracks-v1a1/mono.m3u8",  
+"calientetv19_2": "https://ja.periquitopan.store/calientetv19/tracks-v1a1/mono.m3u8",  
+"calientetv19_3": "https://ja.periquitopan.store/calientetv19/tracks-v1a1/mono.m3u8",  
+
+"calientetv20": "https://ja.periquitopan.store/calientetv20/tracks-v1a1/mono.m3u8",  
+"calientetv20_1": "https://ja.periquitopan.store/calientetv20/tracks-v1a1/mono.m3u8",  
+"calientetv20_2": "https://ja.periquitopan.store/calientetv20/tracks-v1a1/mono.m3u8",  
+"calientetv20_3": "https://ja.periquitopan.store/calientetv20/tracks-v1a1/mono.m3u8",
+
+"hisports": "https://ja.periquitopan.store/hisports/tracks-v1a1/mono.m3u8",
+
+"espnmx": "https://ja.periquitopan.store/espnmx/tracks-v1a1/mono.m3u8",
+"espnmx_1": "https://ja.periquitopan.store/espnmx/tracks-v1a1/mono.m3u8",
+"espnmx_2": "https://ja.periquitopan.store/espnmx/tracks-v1a1/mono.m3u8",
+"espnmx_3": "https://ja.periquitopan.store/espnmx/tracks-v1a1/mono.m3u8",
+
+"espnmx2": "https://ja.periquitopan.store/espnmx2/tracks-v1a1/mono.m3u8",
+"espnmx2_1": "https://ja.periquitopan.store/espnmx2/tracks-v1a1/mono.m3u8",
+"espnmx2_2": "https://ja.periquitopan.store/espnmx2/tracks-v1a1/mono.m3u8",
+"espnmx2_3": "https://ja.periquitopan.store/espnmx2/tracks-v1a1/mono.m3u8",
+
+"espn3mx": "https://ja.periquitopan.store/espn3mx/tracks-v1a1/mono.m3u8",
+"espn3mx_1": "https://ja.periquitopan.store/espn3mx/tracks-v1a1/mono.m3u8",
+"espn3mx_2": "https://ja.periquitopan.store/espn3mx/tracks-v1a1/mono.m3u8",
+"espn3mx_3": "https://ja.periquitopan.store/espn3mx/tracks-v1a1/mono.m3u8",
+
+"espn4mx": "https://ja.periquitopan.store/espn4mx/tracks-v1a1/mono.m3u8",
+"espn4mx_1": "https://ja.periquitopan.store/espn4mx/tracks-v1a1/mono.m3u8",
+"espn4mx_2": "https://ja.periquitopan.store/espn4mx/tracks-v1a1/mono.m3u8",
+"espn4mx_3": "https://ja.periquitopan.store/espn4mx/tracks-v1a1/mono.m3u8",
+
+"teleamazonas": "https://ja.periquitopan.store/teleamazonas/tracks-v1a1/mono.m3u8",
+"teleamazonas_1": "https://ja.periquitopan.store/teleamazonas/tracks-v1a1/mono.m3u8",
+"teleamazonas_2": "https://ja.periquitopan.store/teleamazonas/tracks-v1a1/mono.m3u8",
+"teleamazonas_3": "https://ja.periquitopan.store/teleamazonas/tracks-v1a1/mono.m3u8",
+
+"ecdf": "https://ja.periquitopan.store/eventosec/tracks-v1a1/mono.m3u8",
+"ecdf_1": "https://ja.periquitopan.store/eventosec/tracks-v1a1/mono.m3u8",
+"ecdf_2": "https://ja.periquitopan.store/eventosec/tracks-v1a1/mono.m3u8",
+"ecdf_3": "https://ja.periquitopan.store/eventosec/tracks-v1a1/mono.m3u8",
+
+"eventosec": "https://ja.periquitopan.store/eventosec/tracks-v1a1/mono.m3u8",
+"eventosec": "https://ja.periquitopan.store/eventosec/tracks-v1a1/mono.m3u8",
+"eventosec": "https://ja.periquitopan.store/eventosec/tracks-v1a1/mono.m3u8",
+"eventosec": "https://ja.periquitopan.store/eventosec/tracks-v1a1/mono.m3u8",
+
+"fanatiz1": "https://ja.periquitopan.store/fanatiz1/tracks-v1a1/mono.m3u8",
+"fanatiz1_1": "https://ja.periquitopan.store/fanatiz1/tracks-v1a1/mono.m3u8",
+"fanatiz1_2": "https://ja.periquitopan.store/fanatiz1/tracks-v1a1/mono.m3u8",
+"fanatiz1_3": "https://ja.periquitopan.store/fanatiz1/tracks-v1a1/mono.m3u8",
+
+"fanatiz2": "https://ja.periquitopan.store/fanatiz2/tracks-v1a1/mono.m3u8",
+"fanatiz2_1": "https://ja.periquitopan.store/fanatiz2/tracks-v1a1/mono.m3u8",
+"fanatiz2_2": "https://ja.periquitopan.store/fanatiz2/tracks-v1a1/mono.m3u8",
+"fanatiz2_3": "https://ja.periquitopan.store/fanatiz2/tracks-v1a1/mono.m3u8",
+
+"fanatiz3": "https://ja.periquitopan.store/fanatiz3/tracks-v1a1/mono.m3u8",
+"fanatiz3_1": "https://ja.periquitopan.store/fanatiz3/tracks-v1a1/mono.m3u8",
+"fanatiz3_2": "https://ja.periquitopan.store/fanatiz3/tracks-v1a1/mono.m3u8",
+"fanatiz3_3": "https://ja.periquitopan.store/fanatiz3/tracks-v1a1/mono.m3u8",
+
+"fanatiz4": "https://ja.periquitopan.store/fanatiz4/tracks-v1a1/mono.m3u8",
+"fanatiz4_1": "https://ja.periquitopan.store/fanatiz4/tracks-v1a1/mono.m3u8",
+"fanatiz4_2": "https://ja.periquitopan.store/fanatiz4/tracks-v1a1/mono.m3u8",
+"fanatiz4_3": "https://ja.periquitopan.store/fanatiz4/tracks-v1a1/mono.m3u8",
+
+"fanatiz5": "https://ja.periquitopan.store/fanatiz5/tracks-v1a1/mono.m3u8",
+"fanatiz5_1": "https://ja.periquitopan.store/fanatiz5/tracks-v1a1/mono.m3u8",
+"fanatiz5_2": "https://ja.periquitopan.store/fanatiz5/tracks-v1a1/mono.m3u8",
+"fanatiz5_3": "https://ja.periquitopan.store/fanatiz5/tracks-v1a1/mono.m3u8",
+
+"fanatiz6": "https://ja.periquitopan.store/fanatiz6/tracks-v1a1/mono.m3u8",
+"fanatiz6_1": "https://ja.periquitopan.store/fanatiz6/tracks-v1a1/mono.m3u8",
+"fanatiz6_2": "https://ja.periquitopan.store/fanatiz6/tracks-v1a1/mono.m3u8",
+"fanatiz6_3": "https://ja.periquitopan.store/fanatiz6/tracks-v1a1/mono.m3u8",
+
+"fanatiz7": "https://ja.periquitopan.store/fanatiz7/tracks-v1a1/mono.m3u8",
+"fanatiz7_1": "https://ja.periquitopan.store/fanatiz7/tracks-v1a1/mono.m3u8",
+"fanatiz7_2": "https://ja.periquitopan.store/fanatiz7/tracks-v1a1/mono.m3u8",
+"fanatiz7_3": "https://ja.periquitopan.store/fanatiz7/tracks-v1a1/mono.m3u8",
+
+"fanatiz8": "https://ja.periquitopan.store/fanatiz8/tracks-v1a1/mono.m3u8",
+"fanatiz8_1": "https://ja.periquitopan.store/fanatiz8/tracks-v1a1/mono.m3u8",
+"fanatiz8_2": "https://ja.periquitopan.store/fanatiz8/tracks-v1a1/mono.m3u8",
+"fanatiz8_3": "https://ja.periquitopan.store/fanatiz8/tracks-v1a1/mono.m3u8",
+
+"fanatiz9": "https://ja.periquitopan.store/fanatiz9/tracks-v1a1/mono.m3u8",
+"fanatiz9_1": "https://ja.periquitopan.store/fanatiz9/tracks-v1a1/mono.m3u8",
+"fanatiz9_2": "https://ja.periquitopan.store/fanatiz9/tracks-v1a1/mono.m3u8",
+"fanatiz9_3": "https://ja.periquitopan.store/fanatiz9/tracks-v1a1/mono.m3u8",
+
+"fanatiz10": "https://ja.periquitopan.store/fanatiz10/tracks-v1a1/mono.m3u8",
+"fanatiz10_1": "https://ja.periquitopan.store/fanatiz10/tracks-v1a1/mono.m3u8",
+"fanatiz10_2": "https://ja.periquitopan.store/fanatiz10/tracks-v1a1/mono.m3u8",
+"fanatiz10_3": "https://ja.periquitopan.store/fanatiz10/tracks-v1a1/mono.m3u8",
+
+"ssc1": "https://ja.periquitopan.store/ssc1/tracks-v1a1/mono.m3u8",
+"ssc1_1": "https://ja.periquitopan.store/ssc1/tracks-v1a1/mono.m3u8",
+"ssc1_2": "https://ja.periquitopan.store/ssc1/tracks-v1a1/mozno.m3u8",
+"ssc1_3": "https://ja.periquitopan.store/ssc1/tracks-v1a1/mono.m3u8",
+
+"ssc1extra": "https://ja.periquitopan.store/ssc1extra/tracks-v1a1/mono.m3u8",
+"ssc1extra_1": "https://ja.periquitopan.store/ssc1extra/tracks-v1a1/mono.m3u8",
+"ssc1extra_2": "https://ja.periquitopan.store/ssc1extra/tracks-v1a1/mozno.m3u8",
+"ssc1extra_3": "https://ja.periquitopan.store/ssc1extra/tracks-v1a1/mono.m3u8",
+
+"netflix1": "https://ja.periquitopan.store/netflix1/tracks-v1a1/mono.m3u8",
+"netflix1_1": "https://ja.periquitopan.store/netflix1/tracks-v1a1/mono.m3u8",
+"netflix1_2": "https://ja.periquitopan.store/netflix1/tracks-v1a1/mono.m3u8",
+"netflix1_3": "https://ja.periquitopan.store/netflix1/tracks-v1a1/mono.m3u8",
+
+"netflix2": "https://ja.periquitopan.store/netflix2/tracks-v1a1/mono.m3u8",
+"netflix2_1": "https://ja.periquitopan.store/netflix2/tracks-v1a1/mono.m3u8",
+"netflix2_2": "https://ja.periquitopan.store/netflix2/tracks-v1a1/mono.m3u8",
+"netflix2_3": "https://ja.periquitopan.store/netflix2/tracks-v1a1/mono.m3u8",
+
+"skysportsplus1": "https://ja.periquitopan.store/skysportsplus1/tracks-v1a1/mono.m3u8",
+"skysportsplus1_1": "https://ja.periquitopan.store/skysportsplus1/tracks-v1a1/mono.m3u8",
+"skysportsplus1_2": "https://ja.periquitopan.store/skysportsplus1/tracks-v1a1/mono.m3u8",
+"skysportsplus1_3": "https://ja.periquitopan.store/skysportsplus1/tracks-v1a1/mono.m3u8",
+
+"skysportsplus2": "https://ja.periquitopan.store/skysportsplus2/tracks-v1a1/mono.m3u8",
+"skysportsplus2_1": "https://ja.periquitopan.store/skysportsplus2/tracks-v1a1/mono.m3u8",
+"skysportsplus2_2": "https://ja.periquitopan.store/skysportsplus2/tracks-v1a1/mono.m3u8",
+"skysportsplus2_3": "https://ja.periquitopan.store/skysportsplus2/tracks-v1a1/mono.m3u8",
+
+"skysportsplus3": "https://ja.periquitopan.store/skysportsplus3/tracks-v1a1/mono.m3u8",
+"skysportsplus3_1": "https://ja.periquitopan.store/skysportsplus3/tracks-v1a1/mono.m3u8",
+"skysportsplus3_2": "https://ja.periquitopan.store/skysportsplus3/tracks-v1a1/mono.m3u8",
+"skysportsplus3_3": "https://ja.periquitopan.store/skysportsplus3/tracks-v1a1/mono.m3u8",
+
+"skysportsplus4": "https://ja.periquitopan.store/skysportsplus4/tracks-v1a1/mono.m3u8",
+"skysportsplus4_1": "https://ja.periquitopan.store/skysportsplus4/tracks-v1a1/mono.m3u8",
+"skysportsplus4_2": "https://ja.periquitopan.store/skysportsplus4/tracks-v1a1/mono.m3u8",
+"skysportsplus4_3": "https://ja.periquitopan.store/skysportsplus4/tracks-v1a1/mono.m3u8",
+
+"skysportsplus5": "https://ja.periquitopan.store/skysportsplus5/tracks-v1a1/mono.m3u8",
+"skysportsplus5_1": "https://ja.periquitopan.store/skysportsplus5/tracks-v1a1/mono.m3u8",
+"skysportsplus5_2": "https://ja.periquitopan.store/skysportsplus5/tracks-v1a1/mono.m3u8",
+"skysportsplus5_3": "https://ja.periquitopan.store/skysportsplus5/tracks-v1a1/mono.m3u8",
+
+"skysportsplus6": "https://ja.periquitopan.store/skysportsplus6/tracks-v1a1/mono.m3u8",
+"skysportsplus6_1": "https://ja.periquitopan.store/skysportsplus6/tracks-v1a1/mono.m3u8",
+"skysportsplus6_2": "https://ja.periquitopan.store/skysportsplus6/tracks-v1a1/mono.m3u8",
+"skysportsplus6_3": "https://ja.periquitopan.store/skysportsplus6/tracks-v1a1/mono.m3u8",
+
+"skysportsplus7": "https://ja.periquitopan.store/skysportsplus7/tracks-v1a1/mono.m3u8",
+"skysportsplus7_1": "https://ja.periquitopan.store/skysportsplus7/tracks-v1a1/mono.m3u8",
+"skysportsplus7_2": "https://ja.periquitopan.store/skysportsplus7/tracks-v1a1/mono.m3u8",
+"skysportsplus7_3": "https://ja.periquitopan.store/skysportsplus7/tracks-v1a1/mono.m3u8",
+
+"skysportsplus8": "https://ja.periquitopan.store/skysportsplus8/tracks-v1a1/mono.m3u8",
+"skysportsplus8_1": "https://ja.periquitopan.store/skysportsplus8/tracks-v1a1/mono.m3u8",
+"skysportsplus8_2": "https://ja.periquitopan.store/skysportsplus8/tracks-v1a1/mono.m3u8",
+"skysportsplus8_3": "https://ja.periquitopan.store/skysportsplus8/tracks-v1a1/mono.m3u8",
+
+"skysportsplus9": "https://ja.periquitopan.store/skysportsplus9/tracks-v1a1/mono.m3u8",
+"skysportsplus9_1": "https://ja.periquitopan.store/skysportsplus9/tracks-v1a1/mono.m3u8",
+"skysportsplus9_2": "https://ja.periquitopan.store/skysportsplus9/tracks-v1a1/mono.m3u8",
+"skysportsplus9_3": "https://ja.periquitopan.store/skysportsplus9/tracks-v1a1/mono.m3u8",
+
+"skysportsplus10": "https://ja.periquitopan.store/skysportsplus10/tracks-v1a1/mono.m3u8",
+"skysportsplus10_1": "https://ja.periquitopan.store/skysportsplus10/tracks-v1a1/mono.m3u8",
+"skysportsplus10_2": "https://ja.periquitopan.store/skysportsplus10/tracks-v1a1/mono.m3u8",
+"skysportsplus10_3": "https://ja.periquitopan.store/skysportsplus10/tracks-v1a1/mono.m3u8",
+
+"foxplus": "https://ja.periquitopan.store/foxplus/tracks-v1a1/mono.m3u8",
+
+"fox1usa": "https://ja.periquitopan.store/fox1usa/tracks-v1a1/mono.m3u8",
+
+"fox2usa": "https://ja.periquitopan.store/fox2usa/tracks-v1a1/mono.m3u8",
+
+"tsn1": "https://ja.periquitopan.store/tsn1/tracks-v1a1/mono.m3u8",
+
+"tsn2": "https://ja.periquitopan.store/tsn2/tracks-v1a1/mono.m3u8",
+
+"tsn3": "https://ja.periquitopan.store/tsn3/tracks-v1a1/mono.m3u8",
+
+"tsn4": "https://ja.periquitopan.store/tsn4/tracks-v1a1/mono.m3u8",
+
+"tsn5": "https://ja.periquitopan.store/tsn5/tracks-v1a1/mono.m3u8",
+
+"sportneteast": "https://ja.periquitopan.store/sportneteast/tracks-v1a1/mono.m3u8",
+
+"sn360": "https://ja.periquitopan.store/sn360/tracks-v1a1/mono.m3u8"
+
+};
+
+
+    var channel = getParameterByName('channel') || 'espn'; 
+
+
+    if (!channels[channel]) {
+        alert("El canal especificado no está disponible.");
+        channel = 'intro';
+    }
+
+ 
+    var p2pConfig = {
+        showSlogan: false,
+        announce: "https://ann.embedme.top/v1",
+        token: "dazc",
+        channelId: channel, 
+        swFile: '/player/sw.js',
+        live: true,
+        getStats: function(totalP2PDownloaded, totalP2PUploaded, totalHTTPDownloaded) {
+            var total = totalHTTPDownloaded + totalP2PDownloaded;
+            console.log(`P2P ratio: ${Math.round(totalP2PDownloaded / total * 100)}%, Saved traffic: ${totalP2PDownloaded}KB, Uploaded: ${totalP2PUploaded}KB`);
+        }
+    };
+
+    var player = new Clappr.Player({
+        source: channels[channel] + atob("P21kNT1ySlJKX0lSTktRQ1p5TFdHZy1ZaDd3JmV4cGlyZXM9MTczOTgzMDExMA=="),
+        parentId: "#player",
+        mediacontrol: {
+            seekbar: "#0094ff",
+            buttons: "#ffffff"
+        },
+        loop: "true",
+        preload: "metadata",
+        autoStart: false,
+        width: "100%",
+        height: "100%",
+        mute: true,
+        strings: {
+            en: {
+                live: "LIVE"
+            },
+            es: {
+                live: "LIVE"
+            }
+        }
+    });
+
+    P2PEngineHls.tryRegisterServiceWorker(p2pConfig).then(() => {
+        p2pConfig.hlsjsInstance = player.core.getCurrentPlayback()?._hls;
+        var engine = new P2PEngineHls(p2pConfig);
+    });
+
+    if (getLang == "") {
+        getLang = 1;
+    }
+
+    player.on(Clappr.Events.PLAYER_PLAY, function() {
+    if (typeof player.setCurrentAudioTrack === 'function') {
+        player.setCurrentAudioTrack(getLang);
+    } else {
+        console.warn("La función setCurrentAudioTrack no está disponible.");
+    }
+});
+
+
+    function activarSonido() {
+            player.setVolume(100); // Activa el audio
+            player.configure({ mute: false }); // Quita el mute
+            document.querySelector('.activate-sound').style.display = 'none'; // Oculta el botón
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Error al entrar en pantalla completa: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+    
+</script>
+
+
+</html>
